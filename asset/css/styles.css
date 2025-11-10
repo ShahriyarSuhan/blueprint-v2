@@ -36,7 +36,7 @@
   --white: #ffffff;
   --black: #000000;
   --main: #141415;
-  --primary: #00a442;
+  --primary: #0073ff;
   --text-main: #F4F7F5A3;
   --text-2: #F4F7F5;
   --text-3: #F4F7F552;
@@ -48,12 +48,12 @@
   --bg-2: #141415D1;
   --bg-3: #D9E7FF;
   --bg-4: #BCD6FF;
-  --bg-5: #8effa3;
-  --bg-6: #59ff8b;
-  --bg-7: #1bf54e;
-  --bg-8: #00bd4c;
-  --bg-9: #17b63f;
-  --bg-10: #1b8f19;
+  --bg-5: #8ed0ff;
+  --bg-6: #598bff;
+  --bg-7: #1b6ff5;
+  --bg-8: #002fbd;
+  --bg-9: #172cb6;
+  --bg-10: #19628f;
   --bg-11: #145718;
   --bg-12: #000000A3;
   --line: #FFFFFF1A;
@@ -4890,10 +4890,84 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 
+/* Grid Container */
+.feature-grid {
+    display: grid;
+    /* Create 3 equal-width columns */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px; /* Space between grid items */
+    padding-top: 20px;
+}
+
+/* Individual Grid Item (the <a> tag) */
+.grid-item {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.05); /* Semi-transparent background */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden; /* Ensures image corners are rounded */
+    text-decoration: none;
+    color: #fff; /* Default text color */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.grid-item:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 194, 255, 0.5); /* Highlight color on hover */
+}
+
+/* Image inside the grid item */
+.grid-item-img {
+    width: 100%;
+    height: 200px; /* Fixed height for consistency */
+    object-fit: cover; /* Ensures images cover the area without distortion */
+    display: block;
+}
+
+/* Content area below the image */
+.grid-item-content {
+    padding: 20px;
+    flex-grow: 1; /* Allows this area to expand, keeping footers aligned */
+}
+
+/* Title inside the grid item */
+.grid-item-title {
+    font-size: 1.25rem; /* Example font size */
+    margin-bottom: 10px;
+    color: #fff; /* White title color */
+}
+
+/* Description inside the grid item */
+.grid-item-description {
+    font-size: 1rem;
+    color: #ccc; /* Lighter color for description */
+    line-height: 1.6;
+}
+
+/* --- Responsive Adjustments --- */
+
+/* For tablets and smaller devices (<= 992px) */
+@media (max-width: 992px) {
+    .feature-grid {
+        /* Switch to 2 columns */
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* For mobile devices (<= 768px) */
+@media (max-width: 768px) {
+    .feature-grid {
+        /* Stack into a single column */
+        grid-template-columns: 1fr;
+    }
+}
+
 .orther-overlay {
   position: absolute;
   inset: 0;
-  background-color: #00690b;
+  background-color: #002169;
   mix-blend-mode: hue;
   pointer-events: none;
 }

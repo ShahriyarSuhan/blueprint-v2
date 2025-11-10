@@ -5,11 +5,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Web Agency by Blue Print Media </title>
+    <title>BluePrint Media</title>
     <meta name="author" content="themesflat.com">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description"
-        content="Blue Print Media owns this web agency">
+    <meta name="description" content="Blue Print Media owns this web agency">
 
     <!-- Font -->
     <link rel="stylesheet" href="asset/fonts/fonts.css">
@@ -25,6 +24,228 @@
     <!-- Favicon and Touch Icons  -->
     <link rel="shortcut icon" href="asset/images/logo/favicon.svg">
     <link rel="apple-touch-icon-precomposed" href="asset/images/logo/favicon.svg">
+
+    <!-- Custom CSS for Modals -->
+    <style>
+        /* Make service boxes clickable and add hover effect */
+        #services .box-icon-text {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #services .box-icon-text:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1);
+        }
+
+        /* --- NEW CUSTOM MODAL STYLES --- */
+
+        /* Animation for modal entry */
+        @keyframes modalFadeInUp {
+            from {
+                opacity: 0;
+                transform: translate(0, 30px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        .modal.fade .modal-dialog {
+            animation: modalFadeInUp 0.5s ease-out forwards;
+        }
+
+        .modal {
+            padding: 20px;
+            border-radius: 15, ;
+        }
+
+
+
+        .modal-content {
+            background-color: #080812;
+            /* Slightly darker than before */
+            border: 1px solid var(--primary-20);
+            /* Use theme accent color with opacity */
+            color: #ffffff;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.15), inset 0 0 15px rgba(0, 255, 255, 0.05);
+            /* Glow effect */
+            backdrop-filter: blur(10px);
+            background-color: rgba(13, 13, 26, 0.9);
+            /* Semi-transparent background */
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--primary-20);
+            padding: 1rem 1.5rem;
+        }
+
+        .modal-header .modal-title {
+            font-family: 'Techno', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            /* Use theme accent color */
+            text-shadow: 0 0 10px var(--primary-40);
+            /* Title glow */
+        }
+
+        .modal-header .modal-title::before {
+            content: "[ DETAILS ]// ";
+            opacity: 0.5;
+            font-size: 1.2rem;
+        }
+
+        .modal-body {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.85);
+            padding: 1.5rem;
+        }
+
+        .modal-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Style for highlighted text inside the modal */
+        .modal-body strong {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .btn-close {
+            background: none;
+            opacity: 0.7;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+
+        .btn-close:hover {
+            opacity: 1;
+            transform: rotate(90deg) scale(1.1);
+            filter: none;
+            /* remove filter to show color */
+            color: var(--primary);
+            /* Use theme accent color on hover */
+        }
+
+        .testimonial-screenshot-item {
+            display: inline-block;
+            /* Aligns items correctly in the marquee */
+            vertical-align: middle;
+            margin: 0 20px;
+            /* Spacing between phones */
+            perspective: 1000px;
+            /* For 3D hover effect */
+        }
+
+        .phone-mockup {
+            position: relative;
+            width: 280px;
+            /* Adjust width as needed */
+            /* aspect-ratio: 9 / 19.5; */
+            /* A modern phone screen ratio */
+            background-color: #0c0c1f;
+            /* Dark background for the frame */
+            border-radius: 40px;
+            /* Generous rounding for a phone look */
+            padding: 10px;
+            /* Creates the phone's bezel */
+            border: 2px solid rgba(0, 255, 255, 0.15);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform-style: preserve-3d;
+        }
+
+        .phone-mockup:hover {
+            transform: scale(1.05) translateY(-15px) rotateY(5deg);
+            box-shadow: 0 15px 50px rgba(0, 255, 255, 0.3);
+            border-color: var(--primary);
+        }
+
+        .phone-mockup .screenshot {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 30px;
+            /* Inner radius for the screen */
+        }
+
+        @keyframes isoFadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Style the navigation bar to match the original */
+        .iso-tabs-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 1px solid var(--primary-20);
+            padding: 10px;
+            position: relative;
+            margin-top: 40px;
+        }
+
+        /* Style the tab trigger buttons */
+        .iso-tab-trigger {
+            padding: 12px 24px;
+            font-family: 'Techno', sans-serif;
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .iso-tab-trigger:hover {
+            color: var(--primary);
+        }
+
+        /* Style for the ACTIVE tab trigger */
+        .iso-tab-trigger.is-active {
+            background-color: var(--primary-10);
+            border-color: var(--primary-40);
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        /* The content area wrapper */
+        .iso-tabs-content {
+            margin-top: 40px;
+            position: relative;
+        }
+
+        /* By default, all content panels are COMPLETELY HIDDEN */
+        .iso-tab-panel {
+            display: none;
+        }
+
+        /* The ACTIVE panel is made visible */
+        .iso-tab-panel.is-active {
+            display: block;
+            /* Apply our animation to the grid inside the active panel */
+            animation: isoFadeInUp 0.6s ease-out forwards;
+        }
+    </style>
 
 </head>
 
@@ -65,15 +286,15 @@
                         <nav class="box-navigation">
                             <ul class="main-nav_menu">
                                 <li class="menu-item">
-                                    <a href="#features"
+                                    <a href="#services"
                                         class="tf-btn style-transparent text-body-3 animate-btn scroll-link">
-                                        Features
+                                        Services
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="#howToUse"
+                                    <a href="#workflow"
                                         class="tf-btn style-transparent text-body-3 animate-btn scroll-link">
-                                        How to use
+                                        Workflow
                                     </a>
                                 </li>
                                 <li class="menu-item">
@@ -94,9 +315,7 @@
                     <div class="col-7 col-lg-3">
                         <div class="header-right">
                             <div class="btn_group">
-                                <a href="#" class="tf-btn text-body-3 animate-btn d-none d-sm-flex">
-                                    Log in
-                                </a>
+
                                 <a href="#" class="tf-btn text-body-3 style-2 animate-btn animate-dark">
                                     Get started
                                 </a>
@@ -136,7 +355,7 @@
                                 <span class="bar_center"></span>
                             </span>
                             <span class="hacker-text_transform no-delay">
-                                YOUR PARTNER FOR MODERN WEB DESIGN & DEVELOPMENT
+                                BLUEPRINT MEDIA
                             </span>
                             <span class="bar-group type-right">
                                 <span class="bar_center"></span>
@@ -152,19 +371,16 @@
                 <div class="container">
                     <div class="sect-title wow fadeInUp">
                         <h1 class="s-title font-3">
-                            Design Faster. Launch Smarter. <br>
+                            We Build Brands That Deserve Attention. <br>
                             <div class="text-change_wrap">
-                                <div class="text-change_rotating">Built with<span class="icon icon-react"></span>React.
+                                <div class="text-change_rotating">Automated.
                                 </div>
-                                <div class="text-change_rotating">Optimized for<span
-                                        class="icon icon-speed"></span>Performance.</div>
-                                <div class="text-change_rotating">Delivered with<span
-                                        class="icon icon-rocket"></span>Precision.</div>
+                                <div class="text-change_rotating">Scalable.</div>
+                                <div class="text-change_rotating">Profitable.</div>
                             </div>
                         </h1>
                         <p class="s-sub_title">
-                            We build high-converting landing pages and modern websites — <br class="d-none d-sm-block">
-                            tailored to your brand, optimized for results, and delivered fast.
+                            A complete growth system — built for speed, automation, and scale.
                         </p>
                     </div>
                 </div>
@@ -176,7 +392,7 @@
                 <div class="container">
                     <div class="tf-brand_inner">
                         <h5 class="title text-caption font-2 letter-space-0 fw-normal wg-counter wow fadeInUp">TRUSTED
-                            BY <span class="odometer" data-number="6000">1000</span>+ HIGHLY PRODUCTIVE COMPANY</h5>
+                            BY <span class="odometer" data-number="100">0</span>+ HIGHLY PRODUCTIVE COMPANY</h5>
                         <div class="infiniteSlide infiniteSlide_brand" data-clone="3">
                             <div class="image-brand">
                                 <img class="lazyload" src="asset/images/brand/brand-1.png"
@@ -222,19 +438,17 @@
             <span class="br-line"></span>
         </section>
         <!-- /Section Hero -->
-        <!-- Section Feature -->
 
-        <!-- /Section Feature -->
-        <!-- Section Benefit -->
-        <section class="section-benefit">
+        <!-- START: ISOLATED FEATURE SECTION -->
+        <section class="section-feature">
             <!-- == Head Section -->
             <div class="sect-header">
                 <div class="container">
                     <div class="s-meta text-caption font-2">
                         <p class="s-number_order wg-counter">
-                            [ <span class="text-white">0<span class="odometer" data-number="2">0</span></span> / 06 ]
+                            [ <span class="text-white">0<span class="odometer" data-number="2">0</span></span> / 09 ]
                         </p>
-                        <p class="s-label">[ <span class="text-white hacker-text_transform">BENEFITS</span> ]</p>
+                        <p class="s-label">[ <span class="text-white hacker-text_transform">OUR WORK</span> ]</p>
                     </div>
                 </div>
             </div>
@@ -250,7 +464,178 @@
                                 <span class="bar_center"></span>
                             </span>
                             <span class="hacker-text_transform no-delay">
-                                WHY OUR LANDING PAGES WORK — AND SELL.
+                                PROVEN RESULTS FOR SERVICE-BASED BUSINESSES
+                            </span>
+                            <span class="bar-group type-right">
+                                <span class="bar_center"></span>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <span class="br-line"></span>
+            <!-- == Main Section -->
+            <div class="sect-main flat-animate-tab">
+                <div class="s-img_item wow bounceInScale">
+                    <img class="lazyload" src="asset/images/section/smoke-blue.webp"
+                        data-src="asset/images/section/smoke-blue.webp" alt="Item">
+                </div>
+
+                <div class="container iso-tabs-container"> <!-- Custom container class -->
+                    <div class="sect-title wow fadeInUp">
+                        <h2 class="s-title font-3">
+                            Real Results, Real Growth.
+                        </h2>
+                        <p class="s-sub_title">
+                            We're proud of the work we do and the results we deliver.
+                        </p>
+                    </div>
+
+                    <span class="br-line"></span>
+                    <div class="container">
+                        <div class="position-relative">
+                            <!-- Custom Navigation -->
+                            <nav class="iso-tabs-nav position-relative mx-1">
+                                <a href="#" class="iso-tab-trigger is-active"
+                                    data-tab-target="#iso-restaurants">Restaurants</a>
+                                <a href="#" class="iso-tab-trigger" data-tab-target="#iso-autoshops">Auto Shops</a>
+                                <a href="#" class="iso-tab-trigger" data-tab-target="#iso-salons">Salons</a>
+                                <a href="#" class="iso-tab-trigger" data-tab-target="#iso-realtors">Realtors</a>
+                            </nav>
+                            <span class="hafl-plus pst-left_bot item_bot wow bounceInScale"></span>
+                            <span class="hafl-plus pst-right_bot item_bot wow bounceInScale"></span>
+                        </div>
+                    </div>
+
+                    <!-- Custom Content Area -->
+                    <div class="iso-tabs-content">
+                        <!-- Panel 1: Restaurants -->
+                        <div class="iso-tab-panel is-active" id="iso-restaurants">
+                            <div class="feature-grid">
+                                <a href="#" class="grid-item">
+                                    <img class="grid-item-img lazyload"
+                                        src="https://blueprint-media.vercel.app/assets/restuarant-Da7X3wrt.jpeg"
+                                        data-src="https://blueprint-media.vercel.app/assets/restuarant-Da7X3wrt.jpeg"
+                                        alt="Concept Art">
+                                    <div class="grid-item-content">
+                                        <h5 class="grid-item-title">Divan Restaurant – UGC Pack</h5>
+                                        <p class="grid-item-description">3.5x CTR vs. avg</p>
+                                    </div>
+                                </a>
+                                <a href="#" class="grid-item">
+                                    <img class="grid-item-img lazyload"
+                                        src="https://blueprint-media.vercel.app/assets/nilesha-DuW0ohDQ.jpeg"
+                                        data-src="https://blueprint-media.vercel.app/assets/nilesha-DuW0ohDQ.jpeg"
+                                        alt="Product Mockups">
+                                    <div class="grid-item-content">
+                                        <h5 class="grid-item-title">Neisha Thai - reels sprint</h5>
+                                        <p class="grid-item-description">4.9★ avg from 500+</p>
+                                    </div>
+                                </a>
+                                <a href="#" class="grid-item">
+                                    <img class="grid-item-img lazyload"
+                                        src="https://blueprint-media.vercel.app/assets/hungry-DX_4qjGd.jpeg"
+                                        data-src="https://blueprint-media.vercel.app/assets/hungry-DX_4qjGd.jpeg"
+                                        alt="Social Media Graphics">
+                                    <div class="grid-item-content">
+                                        <h5 class="grid-item-title">Hangry Joes - Social media engine</h5>
+                                        <p class="grid-item-description">4.9★ avg from 500+</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Panel 2: AutoShops -->
+                        <div class="iso-tab-panel" id="iso-autoshops">
+                            <div class="feature-grid">
+                                <a href="#" class="grid-item">
+                                    <img class="grid-item-img lazyload"
+                                        src="https://blueprint-media.vercel.app/assets/peak-B7puq7F9.jpeg"
+                                        data-src="https://blueprint-media.vercel.app/assets/peak-B7puq7F9.jpeg"
+                                        alt="Concept Art">
+                                    <div class="grid-item-content">
+                                        <h5 class="grid-item-title">PeakMods USA - social media growth</h5>
+                                        <p class="grid-item-description">+241% IG reach</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Panel 3: Salons -->
+                        <div class="iso-tab-panel" id="iso-salons">
+                            <div class="feature-grid">
+                                <a href="#" class="grid-item">
+                                    <img class="grid-item-img lazyload"
+                                        src="https://blueprint-media.vercel.app/assets/Creator-CmRw_Uag.png"
+                                        data-src="https://blueprint-media.vercel.app/assets/Creator-CmRw_Uag.png"
+                                        alt="Concept Art">
+                                    <div class="grid-item-content">
+                                        <h5 class="grid-item-title">Beauty Salon – Ads + Content</h5>
+                                        <p class="grid-item-description">100k+ views overnight</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Panel 4: Realtors -->
+                        <div class="iso-tab-panel" id="iso-realtors">
+                            <div class="feature-grid">
+                                <a href="#" class="grid-item">
+                                    <img class="grid-item-img lazyload"
+                                        src="https://blueprint-media.vercel.app/assets/mma-BS15hWzr.jpeg"
+                                        data-src="https://blueprint-media.vercel.app/assets/mma-BS15hWzr.jpeg"
+                                        alt="Concept Art">
+                                    <div class="grid-item-content">
+                                        <h5 class="grid-item-title">Realty Group – Lead Gen Engine</h5>
+                                        <p class="grid-item-description">4.9★ avg from 200+</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="br-line"></span>
+            <!-- == Bottom Section -->
+            <div class="sect-bottom">
+                <div class="container">
+                    <div class="box-hacker has-overlay_linear">
+                        <p class="hacker-text text-caption font-2 text-uppercase hackerText">
+                            qW8bL2nRM4ZpYk5gJfXvCt1uHdEo93NTaVxBYmOe7rPQnKDlcUs0AjzhFiGSwLXtRpUo6NMJvqa7bT2EfyCdx9KWZhgL1nFMR3YUJ5toepXAGvqBzNcdwskLm4iT7OPuVHxayJZErm5QbgCnX1UL2D9ptYfOEK0sWhRAgJmzliNu67BXFoQYPCHtvnwMJeaZKRxdo3TfLUGqc48sbE9NYpJAgmWTVrhXxLFo517zkidC3
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <span class="br-line"></span>
+        </section>
+        <!-- END: ISOLATED FEATURE SECTION -->
+
+        <!-- Section Services -->
+        <section class="section-benefit" id="services">
+            <!-- == Head Section -->
+            <div class="sect-header">
+                <div class="container">
+                    <div class="s-meta text-caption font-2">
+                        <p class="s-number_order wg-counter">
+                            [ <span class="text-white">0<span class="odometer" data-number="3">0</span></span> / 09 ]
+                        </p>
+                        <p class="s-label">[ <span class="text-white hacker-text_transform">SERVICES</span> ]</p>
+                    </div>
+                </div>
+            </div>
+            <span class="br-line"></span>
+            <!-- == Tagline Section -->
+            <div class="sect-tagline">
+                <div class="container">
+                    <div class="sect-tagline_inner">
+                        <span class="hafl-plus pst-left_bot wow bounceInScale"></span>
+                        <span class="hafl-plus pst-right_bot wow bounceInScale"></span>
+                        <p class="s-name text-caption font-2">
+                            <span class="bar-group type-left">
+                                <span class="bar_center"></span>
+                            </span>
+                            <span class="hacker-text_transform no-delay">
+                                🚀 OUR SERVICES
                             </span>
                             <span class="bar-group type-right">
                                 <span class="bar_center"></span>
@@ -275,94 +660,40 @@
                         </div>
                         <div class="sect-title wow fadeInUp">
                             <h2 class="s-title font-3">
-                                Built for fast delivery. <br>
-                                Designed for conversions.
+                                A complete growth system — <br>
+                                built for speed, automation, and scale.
                             </h2>
-                            <p class="s-sub_title">
-                                White-label landing pages built with React — template-first workflow, quick turnarounds,
-                                and
-                                conversion-focused layouts. <br class="d-none d-lg-block">
-                                Perfect for agencies that need reliable, brandable sites delivered under their name.
-                            </p>
                         </div>
                     </div>
                     <div class="position-relative">
-                        <div class="grid-box_icon tf-grid-layout sm-col-2 md-col-3">
-                            <div class="box-icon-text wow fadeInUp">
+                        <div class="grid-box_icon tf-grid-layout sm-col-2">
+                            <!-- MODIFIED: Added modal triggers -->
+                            <div class="box-icon-text wow fadeInUp" data-bs-toggle="modal"
+                                data-bs-target="#paidAdsModal">
                                 <div class="icon">
-                                    <img src="asset/images/section/platform.svg" alt="Template library icon">
+                                    <img src="asset/images/section/speed.svg" alt="Paid Ads Icon">
                                 </div>
                                 <div class="content">
-                                    <p class="title text-main-2">Template Library</p>
+                                    <p class="title text-main-2">Paid Ads (Meta & Google)</p>
                                     <p class="sub-title text-body-3">
-                                        A curated set of conversion-ready React templates — pick a style, swap brand
-                                        assets,
-                                        and launch. Ideal for fast campaigns and repeated projects.
+                                        Turn ad spend into predictable profit. Our AI monitors every creative, audience,
+                                        and metric 24/7 — shifting budget in real time to what performs best. No wasted
+                                        dollars, just pure performance.
                                     </p>
                                 </div>
                             </div>
-                            <div class="box-icon-text wow fadeInUp">
+                            <!-- MODIFIED: Added modal triggers -->
+                            <div class="box-icon-text wow fadeInUp" data-bs-toggle="modal"
+                                data-bs-target="#aiReceptionistModal">
                                 <div class="icon">
-                                    <img src="asset/images/section/speed.svg" alt="Fast turnaround icon">
+                                    <img src="asset/images/section/ai-core.svg" alt="AI Receptionist Icon">
                                 </div>
                                 <div class="content">
-                                    <p class="title text-main-2">Speed that scales</p>
+                                    <p class="title text-main-2">AI Receptionist</p>
                                     <p class="sub-title text-body-3">
-                                        Typical delivery in 12–48 hours for landing pages. Scale to 5–10 sites/day using
-                                        the
-                                        template + intake form workflow.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="box-icon-text wow fadeInUp">
-                                <div class="icon">
-                                    <img src="asset/images/section/control.svg" alt="White-label icon">
-                                </div>
-                                <div class="content">
-                                    <p class="title text-main-2">White-label delivery</p>
-                                    <p class="sub-title text-body-3">
-                                        Sites are delivered under your agency’s brand. You own client communication and
-                                        pricing —
-                                        I handle development and deployment.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="box-icon-text wow fadeInUp">
-                                <div class="icon">
-                                    <img src="asset/images/section/ai-core.svg" alt="Conversion design icon">
-                                </div>
-                                <div class="content">
-                                    <p class="title text-main-2">Conversion-focused design</p>
-                                    <p class="sub-title text-body-3">
-                                        Layouts, CTAs, and form placements are optimized for leads and sales — built
-                                        from proven
-                                        patterns that convert.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="box-icon-text wow fadeInUp">
-                                <div class="icon">
-                                    <img src="asset/images/section/secure.svg" alt="Domain & deploy icon">
-                                </div>
-                                <div class="content">
-                                    <p class="title text-main-2">Domain setup & publishing</p>
-                                    <p class="sub-title text-body-3">
-                                        I handle domain linking, SSL, and deployment (Netlify/Vercel or custom host) so
-                                        the site
-                                        is live and ready to use — included in Standard & Premium.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="box-icon-text wow fadeInUp">
-                                <div class="icon">
-                                    <img src="asset/images/section/evolving.svg" alt="Flexible add-ons icon">
-                                </div>
-                                <div class="content">
-                                    <p class="title text-main-2">Flexible add-ons</p>
-                                    <p class="sub-title text-body-3">
-                                        Need WooCommerce, extra pages, or custom integrations? Add-ons available —
-                                        perfect for
-                                        clients who grow beyond a landing page.
+                                        Your 24/7 front desk that never misses a call. Trained on your offers, tone, and
+                                        process — our AI Receptionist books, qualifies, and converts leads
+                                        automatically, even when you’re off the clock.
                                     </p>
                                 </div>
                             </div>
@@ -378,28 +709,26 @@
                 <div class="container">
                     <div class="box-hacker has-overlay_linear mx-1">
                         <p class="hacker-text text-caption font-2 text-uppercase hackerText">
-                            White-labeled and ready: deliver fast, keep your brand front and center — development
-                            handled by
-                            a reliable partner.
+                            Automation and intelligence to power your business growth. We handle the tech so you can
+                            focus on your customers.
                         </p>
                     </div>
                 </div>
             </div>
             <span class="br-line"></span>
         </section>
+        <!-- /Section Services -->
 
-        <!-- /Section Benefit -->
-
-        <!-- Section How To Use -->
-        <section class="section-how-to" id="howToUse">
+        <!-- Section Workflow -->
+        <section class="section-how-to" id="workflow">
             <!-- == Head Section -->
             <div class="sect-header">
                 <div class="container">
                     <div class="s-meta text-caption font-2">
                         <p class="s-number_order wg-counter">
-                            [ <span class="text-white">0<span class="odometer" data-number="3">0</span></span> / 06 ]
+                            [ <span class="text-white">0<span class="odometer" data-number="4">0</span></span> / 09 ]
                         </p>
-                        <p class="s-label">[ <span class="text-white hacker-text_transform">HOW IT WORKS</span> ]</p>
+                        <p class="s-label">[ <span class="text-white hacker-text_transform">⚙️ WORKFLOW</span> ]</p>
                     </div>
                 </div>
             </div>
@@ -415,7 +744,7 @@
                                 <span class="bar_center"></span>
                             </span>
                             <span class="hacker-text_transform no-delay">
-                                SIMPLE, REPEATABLE, WHITE-LABEL WORKFLOW
+                                A CLEAR PATH TO SCALABLE GROWTH
                             </span>
                             <span class="bar-group type-right">
                                 <span class="bar_center"></span>
@@ -434,87 +763,65 @@
                 <div class="container">
                     <div class="sect-title wow fadeInUp">
                         <h2 class="s-title font-3 m-0">
-                            From brief to live site — <br>
-                            in three simple steps.
+                            How We Build Your Growth System <br>
+                            <small class="text-body-1" style="opacity: 0.7;">(Full Growth Package, AI Rec. + Paid
+                                Ads)</small>
                         </h2>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 offset-xl-1 col-xl-4">
-                            <div class="tab-content mb-md-0 sticky-top wow fadeInUp">
-                                <div class="tab-pane active show" id="step1" role="tabpanel">
-                                    <div class="image-how_to wow bounceInScale">
-                                        <img class="lazyload" src="asset/images/section/step-1.webp"
-                                            data-src="asset/images/section/step-1.webp" alt="Step 1 — Brief">
-                                        <span class="hafl-plus start-0 top-0 rotate-top_left"></span>
-                                        <span class="hafl-plus end-0 top-0 rotate-top_right"></span>
-                                        <span class="hafl-plus start-0 bottom-0 item_bot rotate-bot_left"></span>
-                                        <span class="hafl-plus end-0 bottom-0 item_bot rotate-bot_right"></span>
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="step2" role="tabpanel">
-                                    <div class="image-how_to">
-                                        <img class="lazyload" src="asset/images/section/step-2.webp"
-                                            data-src="asset/images/section/step-2.webp" alt="Step 2 — Build & preview">
-                                        <span class="hafl-plus start-0 top-0 rotate-top_left"></span>
-                                        <span class="hafl-plus end-0 top-0 rotate-top_right"></span>
-                                        <span class="hafl-plus start-0 bottom-0 item_bot rotate-bot_left"></span>
-                                        <span class="hafl-plus end-0 bottom-0 item_bot rotate-bot_right"></span>
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="step3" role="tabpanel">
-                                    <div class="image-how_to">
-                                        <img class="lazyload" src="asset/images/section/step-3.webp"
-                                            data-src="asset/images/section/step-3.webp" alt="Step 3 — Launch">
-                                        <span class="hafl-plus start-0 top-0 rotate-top_left"></span>
-                                        <span class="hafl-plus end-0 top-0 rotate-top_right"></span>
-                                        <span class="hafl-plus start-0 bottom-0 item_bot rotate-bot_left"></span>
-                                        <span class="hafl-plus end-0 bottom-0 item_bot rotate-bot_right"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 offset-xl-2 col-xl-4">
-                            <ul class="tab-how_to position-relative mx-1 wow fadeInUp" role="tablist">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <ul class="tab-how_to is-column position-relative mx-1 wow fadeInUp" role="tablist">
                                 <li class="nav-tab-item" role="presentation">
-                                    <div data-bs-toggle="tab" data-bs-target="#step1" class="btn_tab active"
-                                        aria-selected="true" role="tab">
+                                    <div class="btn_tab active">
                                         <p class="number-step text-caption font-2">STEP 01</p>
-                                        <h5 class="name" data-text="Submit a brief">Submit a brief</h5>
+                                        <h5 class="name" data-text="Discovery & Strategy">Discovery & Strategy</h5>
                                         <p class="desc">
-                                            Fill a short intake form with business name, goal, logo, brand colors,
-                                            selected
-                                            template (if any), and content. The clearer the brief, the faster we
-                                            deliver.
+                                            We start by understanding your business, offers, and goals — then design a
+                                            growth system tailored to you.
                                         </p>
                                     </div>
                                 </li>
                                 <li class="br-line has-dot"></li>
                                 <li class="nav-tab-item" role="presentation">
-                                    <div data-bs-toggle="tab" data-bs-target="#step2" class="btn_tab"
-                                        aria-selected="true" role="tab">
+                                    <div class="btn_tab">
                                         <p class="number-step text-caption font-2">STEP 02</p>
-                                        <h5 class="name" data-text="Design & build">Design & build</h5>
+                                        <h5 class="name" data-text="System Setup">System Setup</h5>
                                         <p class="desc">
-                                            We pick the matching template, swap branding, add content, and implement
-                                            forms or
-                                            integrations. You receive a preview link (staging) for review — usually
-                                            within 12–48
-                                            hours.
+                                            Our team installs your AI Receptionist, connects your CRM, and builds your
+                                            ad infrastructure on Meta + Google.
                                         </p>
                                     </div>
                                 </li>
                                 <li class="br-line has-dot"></li>
                                 <li class="nav-tab-item" role="presentation">
-                                    <div data-bs-toggle="tab" data-bs-target="#step3" class="btn_tab"
-                                        aria-selected="true" role="tab">
+                                    <div class="btn_tab">
                                         <p class="number-step text-caption font-2">STEP 03</p>
-                                        <h5 class="name" data-text="Review & launch">Review & launch</h5>
+                                        <h5 class="name" data-text="Creative & Launch">Creative & Launch</h5>
                                         <p class="desc">
-                                            Request one revision (included). After approval we connect the domain,
-                                            enable SSL,
-                                            and publish the site. Handover files and deployment details are provided —
-                                            white-labeled
-                                            under your agency.
+                                            We develop high-performing ad creatives, launch targeted campaigns, and
+                                            integrate real-time AI optimization.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="br-line has-dot"></li>
+                                <li class="nav-tab-item" role="presentation">
+                                    <div class="btn_tab">
+                                        <p class="number-step text-caption font-2">STEP 04</p>
+                                        <h5 class="name" data-text="Optimization & Scale">Optimization & Scale</h5>
+                                        <p class="desc">
+                                            Our system runs 24/7 — automatically reallocating spend, improving ad
+                                            performance, and refining lead quality.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="br-line has-dot"></li>
+                                <li class="nav-tab-item" role="presentation">
+                                    <div class="btn_tab">
+                                        <p class="number-step text-caption font-2">STEP 05</p>
+                                        <h5 class="name" data-text="Reporting & Growth">Reporting & Growth</h5>
+                                        <p class="desc">
+                                            You’ll receive clear reports and performance updates — showing exactly where
+                                            your revenue is coming from.
                                         </p>
                                     </div>
                                 </li>
@@ -533,22 +840,23 @@
                 <div class="container">
                     <div class="box-hacker has-overlay_linear mx-1">
                         <p class="hacker-text text-caption font-2 text-uppercase hackerText">
-                            White-label process: you present, we build — fast, reliable, and delivered under your brand.
+                            Our process: streamlined, transparent, and focused on delivering measurable results for your
+                            business.
                         </p>
                     </div>
                 </div>
             </div>
             <span class="br-line"></span>
         </section>
+        <!-- /Section Workflow -->
 
-        <!-- /Section How To Use -->
         <!-- Section Pricing -->
         <section class="section-pricing" id="pricing">
             <div class="sect-header">
                 <div class="container">
                     <div class="s-meta text-caption font-2">
                         <p class="s-number_order wg-counter">[ <span class="text-white">0<span class="odometer"
-                                    data-number="4">0</span></span> / 06 ]</p>
+                                    data-number="5">0</span></span> / 09 ]</p>
                         <p class="s-label">[ <span class="text-white hacker-text_transform">PRICING</span> ]</p>
                     </div>
                 </div>
@@ -560,7 +868,7 @@
                     <div class="sect-tagline_inner">
                         <h6 class="s-name text-caption font-2">
                             <span class="bar-group type-left"><span class="bar_center"></span></span>
-                            <span class="hacker-text_transform no-delay">CHOOSE YOUR PACKAGE</span>
+                            <span class="hacker-text_transform no-delay">CHOOSE YOUR GROWTH PACKAGE</span>
                             <span class="bar-group type-right"><span class="bar_center"></span></span>
                         </h6>
                     </div>
@@ -573,54 +881,23 @@
                 <div class="container">
                     <div class="sect-title wow fadeInUp">
                         <h2 class="s-title font-3 m-0">
-                            Simple pricing for<br>
-                            professional websites
+                            Transparent Pricing Plans
                         </h2>
                     </div>
 
-                    <div class="grid-pricing">
-                        <!-- Starter Plan -->
-                        <div class="wg-plan wow fadeInUp">
-                            <div class="content">
-                                <div class="plan-header">
-                                    <p class="plan_type text-body-1">Starter</p>
-                                    <div class="plan_price">
-                                        <h3 class="price-amount">$25</h3>
-                                        <p class="price-duration text-body-3">per landing page</p>
-                                    </div>
-                                    <p class="plan-description">Perfect for basic one-page landing sites or portfolios.
-                                    </p>
-                                    <a href="#" class="tf-btn style-3 style-high animate-btn w-100"><span
-                                            class="text-body-3">Get Started</span></a>
-                                </div>
-                                <span class="br-line has-dot"></span>
-                                <div class="plan-feature">
-                                    <p class="feature_title">What’s Included</p>
-                                    <ul class="features_list">
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> 1 Page
-                                            React Landing</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> Mobile
-                                            Responsive</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> Basic
-                                            Animation & Styling</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            Delivery in 2–3 days</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Standard Plan -->
+                    <div class="grid-pricing justify-content-center">
+                        <!-- AI Paid Ads Plan -->
                         <div class="wg-plan type-2 wow fadeInUp">
                             <div class="content">
                                 <div class="plan-header">
-                                    <p class="plan_type text-body-1">Standard</p>
+                                    <p class="plan_type text-body-1">Blueprint Media — AI Paid Ads</p>
+                                    <p class="plan-description mb-3">Drive targeted traffic and maximize ROI with
+                                        AI-driven advertising on Meta & Google platforms.</p>
+                                    <p class="plan_setup_fee text-body-3">Setup Fee: <strong>$1,000</strong></p>
                                     <div class="plan_price">
-                                        <h3 class="price-amount">$35</h3>
-                                        <p class="price-duration text-body-3">per landing page</p>
+                                        <h3 class="price-amount">$1,000</h3>
+                                        <p class="price-duration text-body-3">Monthly</p>
                                     </div>
-                                    <p class="plan-description">For startups or creators who want a modern, fast, and
-                                        polished site.</p>
                                     <a href="#" class="tf-btn style-2 style-high animate-btn w-100"><span
                                             class="text-body-3">Get Started</span></a>
                                 </div>
@@ -628,32 +905,31 @@
                                 <div class="plan-feature">
                                     <p class="feature_title">What’s Included</p>
                                     <ul class="features_list">
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> Up to
-                                            2 Pages</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> Custom
-                                            UI Design</li>
                                         <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            Animations / Scroll Effects</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> SEO &
-                                            Performance Optimized</li>
+                                            Audience Targeting</li>
+                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> Ad
+                                            Creation</li>
                                         <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            Delivery in 3–4 days</li>
+                                            Bidding & Budgeting</li>
+                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
+                                            Performance Tracking</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Premium Plan -->
+                        <!-- AI Receptionist Plan -->
                         <div class="wg-plan wow fadeInUp">
                             <div class="content">
                                 <div class="plan-header">
-                                    <p class="plan_type text-body-1">Premium</p>
+                                    <p class="plan_type text-body-1">Blueprint Media — AI Receptionist</p>
+                                    <p class="plan-description mb-3">Your 24/7 digital assistant that never misses a
+                                        lead.</p>
+                                    <p class="plan_setup_fee text-body-3">Setup Fee: <strong>$2,000</strong></p>
                                     <div class="plan_price">
-                                        <h3 class="price-amount">$45</h3>
-                                        <p class="price-duration text-body-3">per landing page</p>
+                                        <h3 class="price-amount">$1,000</h3>
+                                        <p class="price-duration text-body-3">Monthly</p>
                                     </div>
-                                    <p class="plan-description">For brands needing full customization, animations, and
-                                        integrations.</p>
                                     <a href="#" class="tf-btn style-3 style-high animate-btn w-100"><span
                                             class="text-body-3">Get Started</span></a>
                                 </div>
@@ -661,58 +937,30 @@
                                 <div class="plan-feature">
                                     <p class="feature_title">What’s Included</p>
                                     <ul class="features_list">
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> Up to
-                                            2 Custom Pages</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> API &
-                                            Form Integration</li>
+                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> 24/7
+                                            Live Call Answering</li>
                                         <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            Complex Animations</li>
+                                            Automated Scheduling</li>
+                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> Lead
+                                            Qualification</li>
+                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> Call &
+                                            SMS Follow-Ups</li>
                                         <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            Priority Support</li>
+                                            Customized to Your Business</li>
                                         <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            Delivery in 4–5 days</li>
+                                            Seamless CRM Integration</li>
+                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
+                                            Analytics & Reporting</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- WooCommerce Addon -->
-                        <div class="wg-plan type-3 wow fadeInUp">
-                            <div class="content">
-                                <div class="plan-header">
-                                    <p class="plan_type text-body-1">WooCommerce Setup</p>
-                                    <div class="plan_price">
-                                        <h3 class="price-amount">$100+</h3>
-                                        <p class="price-duration text-body-3">starting price</p>
-                                    </div>
-                                    <p class="plan-description">Complete eCommerce setup with products, checkout, and
-                                        custom theme.</p>
-                                    <a href="#" class="tf-btn style-2 style-high animate-btn w-100"><span
-                                            class="text-body-3">Request Quote</span></a>
-                                </div>
-                                <span class="br-line has-dot"></span>
-                                <div class="plan-feature">
-                                    <p class="feature_title">What’s Included</p>
-                                    <ul class="features_list">
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            WooCommerce Installation</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            Product & Payment Setup</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> Custom
-                                            Design Integration</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            Responsive & Optimized</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </section>
-
         <!-- /Section Pricing -->
+
         <!-- Section Testimonial -->
         <section class="section-testimonial">
             <!-- == Head Section -->
@@ -720,9 +968,9 @@
                 <div class="container">
                     <div class="s-meta text-caption font-2">
                         <p class="s-number_order wg-counter">
-                            [ <span class="text-white">0<span class="odometer" data-number="5">0</span></span> / 06 ]
+                            [ <span class="text-white">0<span class="odometer" data-number="6">0</span></span> / 09 ]
                         </p>
-                        <p class="s-label">[ <span class="text-white hacker-text_transform">TESTIMONIALS</span> ]</p>
+                        <p class="s-label">[ <span class="text-white hacker-text_transform">RESULTS</span> ]</p>
                     </div>
                 </div>
             </div>
@@ -738,7 +986,7 @@
                                 <span class="bar_center"></span>
                             </span>
                             <span class="hacker-text_transform no-delay">
-                                REAL FEEDBACK FROM CREATORS AND POWER USERS.
+                                REAL RESULTS FROM INDUSTRY LEADERS.
                             </span>
                             <span class="bar-group type-right">
                                 <span class="bar_center"></span>
@@ -760,234 +1008,98 @@
                 <div class="container">
                     <div class="sect-title wow fadeInUp">
                         <h2 class="s-title font-3 m-0">
-                            What people say <br>
-                            about Qore.
+                            Trusted by businesses <br>
+                            just like yours.
                         </h2>
                     </div>
                     <div class="testimonial-slide-wrap">
                         <div class="overflow-hidden has-overlay_linear type-2 mx-1">
+
+                            <!-- First Scrolling Row -->
                             <div class="infiniteSlide infiniteSlide-tes">
-                                <div class="wg-testimonial">
-                                    <div class="tes-author">
-                                        <div class="author_image">
-                                            <img class="lazyload" src="asset/images/avatar/avt-1.webp"
-                                                data-src="asset/images/avatar/avt-1.webp" alt="Avatar">
-                                        </div>
-                                        <div class="author_info">
-                                            <a href="#" class="link name">Lucas Bennett</a>
-                                            <p class="text-body-3">@lucasbennett</p>
-                                        </div>
+                                <!-- Screenshot Item 1 -->
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/1.JPEG"
+                                            data-src="asset/images/testimonials/1.JPEG" alt="Testimonial Screenshot 1">
                                     </div>
-                                    <p class="tes-text">
-                                        <span class="text-main-2">@qore</span> helps me organize creative tasks way
-                                        faster. The image prompt support
-                                        is
-                                        smooth and the AI responses feel
-                                        human.
-                                    </p>
                                 </div>
-                                <div class="wg-testimonial">
-                                    <div class="tes-author">
-                                        <div class="author_image">
-                                            <img class="lazyload" src="asset/images/avatar/avt-2.webp"
-                                                data-src="asset/images/avatar/avt-2.webp" alt="Avatar">
-                                        </div>
-                                        <div class="author_info">
-                                            <a href="#" class="link name">Ethan Moore</a>
-                                            <p class="text-body-3">@ethanmoore</p>
-                                        </div>
+                                <!-- Screenshot Item 2 -->
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/2.PNG"
+                                            data-src="asset/images/testimonials/2.PNG" alt="Testimonial Screenshot 2">
                                     </div>
-                                    <p class="tes-text">
-                                        Started with the free plan on <span class="text-main-2">@qore</span> and didn’t
-                                        expect much. But the speed,
-                                        accuracy, and clean UI convinced me to
-                                        upgrade in just a few days.
-                                    </p>
                                 </div>
-                                <div class="wg-testimonial">
-                                    <div class="tes-author">
-                                        <div class="author_image">
-                                            <img class="lazyload" src="asset/images/avatar/avt-3.webp"
-                                                data-src="asset/images/avatar/avt-3.webp" alt="Avatar">
-                                        </div>
-                                        <div class="author_info">
-                                            <a href="#" class="link name">Lucas Bennett</a>
-                                            <p class="text-body-3">@lucasbennett</p>
-                                        </div>
+                                <!-- Screenshot Item 3 -->
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/3.JPEG"
+                                            data-src="asset/images/testimonials/3.JPEG" alt="Testimonial Screenshot 3">
                                     </div>
-                                    <p class="tes-text">
-                                        <span class="text-main-2">@qore</span> helps me organize creative tasks way
-                                        faster. The image prompt support
-                                        is
-                                        smooth and the AI responses feel
-                                        human.
-                                    </p>
                                 </div>
-                                <div class="wg-testimonial">
-                                    <div class="tes-author">
-                                        <div class="author_image">
-                                            <img class="lazyload" src="asset/images/avatar/avt-4.webp"
-                                                data-src="asset/images/avatar/avt-4.webp" alt="Avatar">
-                                        </div>
-                                        <div class="author_info">
-                                            <a href="#" class="link name">Olivia Tran</a>
-                                            <p class="text-body-3">@oliviatran</p>
-                                        </div>
+                                <!-- Screenshot Item 4 -->
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/4.PNG"
+                                            data-src="asset/images/testimonials/4.PNG" alt="Testimonial Screenshot 4">
                                     </div>
-                                    <p class="tes-text">
-                                        As a marketer, I rely on <span class="text-main-2">@qore</span> daily. It cuts
-                                        through the noise and delivers
-                                        clear, brand-friendly outputs every time.
-                                    </p>
                                 </div>
-                                <div class="wg-testimonial">
-                                    <div class="tes-author">
-                                        <div class="author_image">
-                                            <img class="lazyload" src="asset/images/avatar/avt-5.webp"
-                                                data-src="asset/images/avatar/avt-5.webp" alt="Avatar">
-                                        </div>
-                                        <div class="author_info">
-                                            <a href="#" class="link name">Elena Roque</a>
-                                            <p class="text-body-3">Elena Roque</p>
-                                        </div>
+                                <!-- Screenshot Item 5 -->
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/5.JPEG"
+                                            data-src="asset/images/testimonials/5.JPEG" alt="Testimonial Screenshot 5">
                                     </div>
-                                    <p class="tes-text">
-                                        I use <span class="text-main-2">@qore</span> to brainstorm brand ideas and
-                                        design prompts. Even the Free plan
-                                        feels generous and super helpful for quick drafts.
-                                    </p>
                                 </div>
-                                <div class="wg-testimonial">
-                                    <div class="tes-author">
-                                        <div class="author_image">
-                                            <img class="lazyload" src="asset/images/avatar/avt-6.webp"
-                                                data-src="asset/images/avatar/avt-6.webp" alt="Avatar">
-                                        </div>
-                                        <div class="author_info">
-                                            <a href="#" class="link name">Lucas Bennett</a>
-                                            <p class="text-body-3">@lucasbennett</p>
-                                        </div>
+                                <!-- Screenshot Item 11 -->
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/11.PNG"
+                                            data-src="asset/images/testimonials/11.PNG" alt="Testimonial Screenshot 11">
                                     </div>
-                                    <p class="tes-text">
-                                        <span class="text-main-2">@qore</span> helps me organize creative tasks way
-                                        faster. The image prompt support
-                                        is
-                                        smooth and the AI responses feel
-                                        human.
-                                    </p>
                                 </div>
                             </div>
+
+                            <!-- Second Scrolling Row (Reversed) -->
                             <div class="infiniteSlide infiniteSlide-tes" data-style="right">
-                                <div class="wg-testimonial">
-                                    <div class="tes-author">
-                                        <div class="author_image">
-                                            <img class="lazyload" src="asset/images/avatar/avt-4.webp"
-                                                data-src="asset/images/avatar/avt-4.webp" alt="Avatar">
-                                        </div>
-                                        <div class="author_info">
-                                            <a href="#" class="link name">Olivia Tran</a>
-                                            <p class="text-body-3">@oliviatran</p>
-                                        </div>
+                                <!-- Screenshot Item 6 -->
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/6.PNG"
+                                            data-src="asset/images/testimonials/6.PNG" alt="Testimonial Screenshot 6">
                                     </div>
-                                    <p class="tes-text">
-                                        As a marketer, I rely on <span class="text-main-2">@qore</span> daily. It cuts
-                                        through the noise and delivers
-                                        clear, brand-friendly outputs every time.
-                                    </p>
                                 </div>
-                                <div class="wg-testimonial">
-                                    <div class="tes-author">
-                                        <div class="author_image">
-                                            <img class="lazyload" src="asset/images/avatar/avt-5.webp"
-                                                data-src="asset/images/avatar/avt-5.webp" alt="Avatar">
-                                        </div>
-                                        <div class="author_info">
-                                            <a href="#" class="link name">Elena Roque</a>
-                                            <p class="text-body-3">Elena Roque</p>
-                                        </div>
+                                <!-- Screenshot Item 7 -->
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/7.PNG"
+                                            data-src="asset/images/testimonials/7.PNG" alt="Testimonial Screenshot 7">
                                     </div>
-                                    <p class="tes-text">
-                                        I use <span class="text-main-2">@qore</span> to brainstorm brand ideas and
-                                        design prompts. Even the Free plan
-                                        feels generous and super helpful for quick drafts.
-                                    </p>
                                 </div>
-                                <div class="wg-testimonial">
-                                    <div class="tes-author">
-                                        <div class="author_image">
-                                            <img class="lazyload" src="asset/images/avatar/avt-6.webp"
-                                                data-src="asset/images/avatar/avt-6.webp" alt="Avatar">
-                                        </div>
-                                        <div class="author_info">
-                                            <a href="#" class="link name">Lucas Bennett</a>
-                                            <p class="text-body-3">@lucasbennett</p>
-                                        </div>
+                                <!-- Screenshot Item 8 -->
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/8.JPEG"
+                                            data-src="asset/images/testimonials/8.JPEG" alt="Testimonial Screenshot 8">
                                     </div>
-                                    <p class="tes-text">
-                                        <span class="text-main-2">@qore</span> helps me organize creative tasks way
-                                        faster. The image prompt support
-                                        is
-                                        smooth and the AI responses feel
-                                        human.
-                                    </p>
                                 </div>
-                                <div class="wg-testimonial">
-                                    <div class="tes-author">
-                                        <div class="author_image">
-                                            <img class="lazyload" src="asset/images/avatar/avt-1.webp"
-                                                data-src="asset/images/avatar/avt-1.webp" alt="Avatar">
-                                        </div>
-                                        <div class="author_info">
-                                            <a href="#" class="link name">Lucas Bennett</a>
-                                            <p class="text-body-3">@lucasbennett</p>
-                                        </div>
+                                <!-- Screenshot Item 9 -->
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/9.JPEG"
+                                            data-src="asset/images/testimonials/9.JPEG" alt="Testimonial Screenshot 9">
                                     </div>
-                                    <p class="tes-text">
-                                        <span class="text-main-2">@qore</span> helps me organize creative tasks way
-                                        faster. The image prompt support
-                                        is
-                                        smooth and the AI responses feel
-                                        human.
-                                    </p>
                                 </div>
-                                <div class="wg-testimonial">
-                                    <div class="tes-author">
-                                        <div class="author_image">
-                                            <img class="lazyload" src="asset/images/avatar/avt-2.webp"
-                                                data-src="asset/images/avatar/avt-2.webp" alt="Avatar">
-                                        </div>
-                                        <div class="author_info">
-                                            <a href="#" class="link name">Ethan Moore</a>
-                                            <p class="text-body-3">@ethanmoore</p>
-                                        </div>
+                                <!-- Screenshot Item 10 -->
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/10.PNG"
+                                            data-src="asset/images/testimonials/10.PNG" alt="Testimonial Screenshot 10">
                                     </div>
-                                    <p class="tes-text">
-                                        Started with the free plan on <span class="text-main-2">@qore</span> and didn’t
-                                        expect much. But the speed,
-                                        accuracy, and clean UI convinced me to
-                                        upgrade in just a few days.
-                                    </p>
-                                </div>
-                                <div class="wg-testimonial">
-                                    <div class="tes-author">
-                                        <div class="author_image">
-                                            <img class="lazyload" src="asset/images/avatar/avt-3.webp"
-                                                data-src="asset/images/avatar/avt-3.webp" alt="Avatar">
-                                        </div>
-                                        <div class="author_info">
-                                            <a href="#" class="link name">Lucas Bennett</a>
-                                            <p class="text-body-3">@lucasbennett</p>
-                                        </div>
-                                    </div>
-                                    <p class="tes-text">
-                                        <span class="text-main-2">@qore</span> helps me organize creative tasks way
-                                        faster. The image prompt support
-                                        is
-                                        smooth and the AI responses feel
-                                        human.
-                                    </p>
                                 </div>
                             </div>
+
                         </div>
                         <span class="hafl-plus pst-left_bot item_bot z-1 wow bounceInScale"></span>
                         <span class="hafl-plus pst-right_bot item_bot z-1 wow bounceInScale"></span>
@@ -1008,6 +1120,7 @@
             <span class="br-line"></span>
         </section>
         <!-- /Section Testimonial -->
+
         <!-- Section Faq -->
         <section class="section-faq" id="FAQs">
             <!-- == Head Section -->
@@ -1015,9 +1128,9 @@
                 <div class="container">
                     <div class="s-meta text-caption font-2">
                         <p class="s-number_order wg-counter">
-                            [ <span class="text-white">0<span class="odometer" data-number="6">0</span></span> / 06 ]
+                            [ <span class="text-white">0<span class="odometer" data-number="7">0</span></span> / 09 ]
                         </p>
-                        <p class="s-label">[ <span class="text-white hacker-text_transform">FAQS</span> ]</p>
+                        <p class="s-label">[ <span class="text-white hacker-text_transform">💬 FAQS</span> ]</p>
                     </div>
                 </div>
             </div>
@@ -1033,7 +1146,7 @@
                                 <span class="bar_center"></span>
                             </span>
                             <span class="hacker-text_transform no-delay">
-                                ANSWERS TO YOUR CLIENTS' TOP QUESTIONS.
+                                ANSWERS TO YOUR TOP QUESTIONS.
                             </span>
                             <span class="bar-group type-right">
                                 <span class="bar_center"></span>
@@ -1057,45 +1170,33 @@
                             <div class="faq-list">
                                 <div class="faq-item wow fadeInLeft">
                                     <h3 class="text-body-2 faq_title text-main-2">
-                                        What packages do you offer?
+                                        What industries do you work with?
                                     </h3>
                                     <p class="text-body-3 faq_label">
-                                        Starter ($25), Standard ($35), and Premium ($45) landing pages — plus
-                                        WooCommerce setups starting at $80. Each tier lists what’s included so clients
-                                        can pick the best fit.
+                                        We work primarily with service-based businesses — restaurants, auto shops,
+                                        salons, realtors, and more — helping them automate lead capture and scale ads
+                                        profitably.
                                     </p>
                                 </div>
                                 <span class="br-line has-dot"></span>
                                 <div class="faq-item wow fadeInLeft">
                                     <h3 class="text-body-2 faq_title text-main-2">
-                                        How long does a landing page take?
+                                        How long until I start seeing results?
                                     </h3>
                                     <p class="text-body-3 faq_label">
-                                        Typical delivery for landing pages is 12–48 hours (Starter), 2–4 days
-                                        (Standard), and 4–5 days (Premium) depending on complexity and content
-                                        readiness.
+                                        Most clients see significant traction within the first 2–4 weeks of launch as
+                                        the AI system learns and optimizes.
                                     </p>
                                 </div>
                                 <span class="br-line has-dot"></span>
                                 <div class="faq-item wow fadeInLeft">
                                     <h3 class="text-body-2 faq_title text-main-2">
-                                        Do you work white-label for agencies?
+                                        What makes your ads different?
                                     </h3>
                                     <p class="text-body-3 faq_label">
-                                        Yes — all work is white-labeled. Sites are delivered under your agency’s name;
-                                        you handle client communication and pricing, I handle development and
-                                        deployment.
-                                    </p>
-                                </div>
-                                <span class="br-line has-dot"></span>
-                                <div class="faq-item wow fadeInLeft">
-                                    <h3 class="text-body-2 faq_title text-main-2">
-                                        What do you need from the client to start?
-                                    </h3>
-                                    <p class="text-body-3 faq_label">
-                                        A short intake form: business name, logo, brand colors, main headline, short
-                                        description, images (if any), chosen template (optional), and domain details if
-                                        publishing is required.
+                                        Our ads evolve. The AI constantly analyzes performance data, reallocating budget
+                                        in real time to what’s working best — so you get consistent improvement, not
+                                        guesswork.
                                     </p>
                                 </div>
                                 <span class="br-line has-dot"></span>
@@ -1105,43 +1206,21 @@
                             <div class="faq-list">
                                 <div class="faq-item wow fadeInRight">
                                     <h3 class="text-body-2 faq_title text-main-2">
-                                        How many revisions are included?
+                                        Can I customize how the AI Receptionist speaks or responds?
                                     </h3>
                                     <p class="text-body-3 faq_label">
-                                        One round of revisions is included with each package. Additional revisions or
-                                        custom feature requests can be added as paid add-ons.
+                                        Yes. We tailor tone, phrasing, and logic to match your brand’s voice and
+                                        customer journey.
                                     </p>
                                 </div>
                                 <span class="br-line has-dot"></span>
                                 <div class="faq-item wow fadeInRight">
                                     <h3 class="text-body-2 faq_title text-main-2">
-                                        Do you handle domain, SSL, and publishing?
+                                        Do I need to manage anything myself?
                                     </h3>
                                     <p class="text-body-3 faq_label">
-                                        Yes — domain linking, SSL, and deployment to Vercel/Netlify or custom hosts are
-                                        included with Standard and Premium packages. Starter can be delivered as a ZIP
-                                        or staging link.
-                                    </p>
-                                </div>
-                                <span class="br-line has-dot"></span>
-                                <div class="faq-item wow fadeInRight">
-                                    <h3 class="text-body-2 faq_title text-main-2">
-                                        What about WooCommerce or bigger projects?
-                                    </h3>
-                                    <p class="text-body-3 faq_label">
-                                        WooCommerce setups start at $80 (base). For larger e-commerce projects we
-                                        provide a custom quote based on product count, integrations, and complexity.
-                                    </p>
-                                </div>
-                                <span class="br-line has-dot"></span>
-                                <div class="faq-item wow fadeInRight">
-                                    <h3 class="text-body-2 faq_title text-main-2">
-                                        How do payments and bulk orders work?
-                                    </h3>
-                                    <p class="text-body-3 faq_label">
-                                        For single landing pages we accept per-project payments. For bulk or recurring
-                                        work we can invoice weekly or biweekly. For larger builds (WooCommerce), a 50%
-                                        upfront deposit is recommended.
+                                        No. Blueprint Media handles everything — setup, management, optimization, and
+                                        reporting. You focus on running your business while the system drives growth.
                                     </p>
                                 </div>
                                 <span class="br-line has-dot"></span>
@@ -1160,15 +1239,13 @@
                 <div class="container">
                     <div class="box-hacker has-overlay_linear mx-1">
                         <p class="hacker-text text-caption font-2 text-uppercase hackerText">
-                            White-label process: you present — we build fast, reliable, and brandable websites for your
-                            clients.
+                            qW8bL2nRM4ZpYk5gJfXvCt1uHdEo93NTaVxBYmOe7rPQnKDlcUs0AjzhFiGSwLXtRpUo6NMJvqa7bT2EfyCdx9KWZhgL1nFMR3YUJ5toepXAGvqBzNcdwskLm4iT7OPuVHxayJZErm5QbgCnX1UL2D9ptYfOEK0sWhRAgJmzliNu67BXFoQYPCHtvnwMJeaZKRxdo3TfLUGqc48sbE9NYpJAgmWTVrhXxLFo517zkidC3
                         </p>
                     </div>
                 </div>
             </div>
             <span class="br-line"></span>
         </section>
-
         <!-- /Section Faq -->
 
 
@@ -1210,13 +1287,13 @@
                                     data-src="asset/images/logo/logo.svg" alt="LOGO">
                             </a>
                             <div class="footer-col-block wow fadeInLeft mx-auto m-sm-0">
-                                <h5 class="footer-heading footer-heading-mobile font-2">Product</h5>
+                                <h5 class="footer-heading footer-heading-mobile font-2">Menu</h5>
                                 <div class="tf-collapse-content">
                                     <ul class="footer-menu-list">
-                                        <li><a href="#" class="link text-main-2">Features</a></li>
-                                        <li><a href="#" class="link text-main-2">Benefits</a></li>
-                                        <li><a href="#" class="link text-main-2">How to use</a></li>
-                                        <li><a href="#" class="link text-main-2">Pricing</a></li>
+                                        <li><a href="#services" class="link text-main-2">Services</a></li>
+                                        <li><a href="#workflow" class="link text-main-2">Workflow</a></li>
+                                        <li><a href="#pricing" class="link text-main-2">Pricing</a></li>
+                                        <li><a href="#FAQs" class="link text-main-2">FAQs</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -1243,7 +1320,7 @@
                         <span class="br-line has-dot"></span>
                         <div class="footer-inner_bottom">
                             <p class="text-caption font-2">
-                                © 2025 QORE. ALL RIGHTS RESERVED.
+                                © 2024 BluePrint Media. ALL RIGHTS RESERVED.
                             </p>
                             <a href="#" class="text-caption font-2 link">
                                 BACK TO TOP
@@ -1263,7 +1340,7 @@
                 <img class="lazyload" src="asset/images/logo/logo.svg" data-src="asset/images/logo/logo.svg" alt="LOGO">
             </div>
             <div class="btn_group">
-                <a href="404.html" class="tf-btn style-2">
+                <a href="#" class="tf-btn style-2">
                     Get started
                 </a>
                 <span class="icon-close-popup" data-bs-dismiss="offcanvas">
@@ -1275,13 +1352,13 @@
         <div class="canvas-body">
             <ul class="nav-ul-mb">
                 <li class="nav-mb-item" data-bs-dismiss="offcanvas">
-                    <a href="#features" class="mb-item-link scroll-link">
-                        Features
+                    <a href="#services" class="mb-item-link scroll-link">
+                        Services
                     </a>
                 </li>
                 <li class="nav-mb-item" data-bs-dismiss="offcanvas">
-                    <a href="#howToUse" class="mb-item-link scroll-link">
-                        How to use
+                    <a href="#workflow" class="mb-item-link scroll-link">
+                        Workflow
                     </a>
                 </li>
                 <li class="nav-mb-item" data-bs-dismiss="offcanvas">
@@ -1297,12 +1374,62 @@
             </ul>
         </div>
         <div class="canvas-footer">
-            <a href="404.html" class="tf-btn w-100 animate-btn style-high">
+            <a href="#" class="tf-btn w-100 animate-btn style-high">
                 Login
             </a>
         </div>
     </div>
     <!-- /Mobile Menu -->
+
+    <!-- START: MODALS for Services -->
+
+    <!-- Paid Ads Modal -->
+    <div class="modal fade" id="paidAdsModal" tabindex="-1" aria-labelledby="paidAdsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paidAdsModalLabel">Paid Ads (Meta & Google)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>We don’t just run ads — we build <strong>self-optimizing growth machines</strong>. Our AI system
+                        constantly scans every ad creative, audience, and metric 24/7 — reallocating spend in real time
+                        to what performs best. No wasted dollars. No guesswork.</p>
+                    <p>Every campaign is engineered with precision — from ad copy and creative strategy to advanced
+                        retargeting and funnel optimization. The result: scalable, data-driven ad systems that
+                        <strong>automatically evolve and compound your returns</strong> while you sleep.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Receptionist Modal -->
+    <div class="modal fade" id="aiReceptionistModal" tabindex="-1" aria-labelledby="aiReceptionistModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="aiReceptionistModalLabel">AI Receptionist</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Your smartest employee — armed with <strong>specific knowledge and world-class scripting +
+                            tone</strong>, never off the clock. Our AI Receptionist instantly answers calls, books
+                        appointments, and qualifies leads in real time — for when you don’t feel like coming to the
+                        phone.</p>
+                    <p>Built on advanced conversational AI, it adapts to your business’s language, tone, and offers with
+                        precision. Every interaction is tracked, analyzed, and optimized automatically, turning your
+                        front desk into a <strong>self-improving sales system</strong>.</p>
+                    <p>It’s not just automation — <strong>it’s intelligence that sells.</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- END: MODALS for Services -->
+
+
 
     <!-- Javascript -->
     <script src="asset/js/bootstrap.min.js"></script>
@@ -1365,6 +1492,44 @@
 
         var AUTOHIDE = Boolean(0);
     </script>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Find our custom tab component container
+    const tabsContainer = document.querySelector('.iso-tabs-container');
+    if (!tabsContainer) {
+        return; // If the component doesn't exist on the page, do nothing
+    }
+
+    // Get all the navigation triggers and content panels within this component
+    const tabTriggers = tabsContainer.querySelectorAll('.iso-tab-trigger');
+    const tabPanels = tabsContainer.querySelectorAll('.iso-tab-panel');
+
+    // Add a click event listener to each trigger
+    tabTriggers.forEach(function(trigger) {
+        trigger.addEventListener('click', function(e) {
+            e.preventDefault(); // Stop the link from navigating
+
+            // Get the ID of the target panel from the 'data-tab-target' attribute
+            const targetId = this.getAttribute('data-tab-target');
+            const targetPanel = document.querySelector(targetId);
+            
+            // --- This is the core logic ---
+
+            // 1. Deactivate all triggers and panels first
+            tabTriggers.forEach(t => t.classList.remove('is-active'));
+            tabPanels.forEach(p => p.classList.remove('is-active'));
+
+            // 2. Activate the clicked trigger and its corresponding panel
+            this.classList.add('is-active');
+            if (targetPanel) {
+                targetPanel.classList.add('is-active');
+            }
+        });
+    });
+});
+</script>
+
 </body>
 
 </html>
