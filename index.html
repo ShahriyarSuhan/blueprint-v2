@@ -38,6 +38,178 @@
             box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1);
         }
 
+        .work-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .work-card {
+            position: relative;
+            background: rgba(12, 12, 31, 0.8);
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Hover Effects */
+        .work-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(0, 255, 255, 0.15);
+        }
+
+        .work-card:hover .card-bg-img {
+            transform: scale(1.1);
+            opacity: 0.4;
+        }
+
+        .work-card:hover .card-overlay {
+            background: linear-gradient(to top, rgba(8, 8, 18, 1) 0%, rgba(8, 8, 18, 0.4) 100%);
+        }
+
+        /* Card Image Area */
+        .card-image-wrapper {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-bg-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease, opacity 0.6s ease;
+            opacity: 0.6;
+        }
+
+        .card-logo-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            width: 80%;
+            text-align: center;
+        }
+
+        .card-logo-text {
+            font-family: 'Techno', sans-serif;
+            font-size: 1.8rem;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Card Content Area */
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: linear-gradient(180deg, rgba(12, 12, 31, 0) 0%, rgba(8, 8, 18, 1) 100%);
+        }
+
+        /* Badges */
+        .card-tags {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .card-tag {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-tag.highlight {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(0, 255, 255, 0.05);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+        }
+
+        /* Text Styles */
+        .card-title {
+            font-family: 'Techno', sans-serif;
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .card-stat {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: #a0a0b0;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stat-value {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Featured Card (Nissan) */
+        .work-card.featured {
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+
+        .work-card.featured .card-tag.highlight {
+            background: var(--primary);
+            color: #000;
+            font-weight: bold;
+        }
+
+        /* NDA / Classified Card */
+        .work-card.classified .card-bg-img {
+            filter: blur(8px) grayscale(100%);
+        }
+
+        .work-card.classified .card-logo-text {
+            background: #fff;
+            color: #000;
+            padding: 5px 15px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transform: translate(-50%, -50%) rotate(-5deg);
+        }
+
+        .redacted-bar {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            padding: 0 5px;
+            margin-left: 5px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .work-grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* --- NEW CUSTOM MODAL STYLES --- */
 
         /* Animation for modal entry */
@@ -277,8 +449,10 @@
                 <div class="row d-flex align-items-center">
                     <div class="col-5 col-lg-3">
                         <div class="header-left">
-                            <a href="index.html" class="logo-site" style="display: flex; flex-direction: row; justify-content: center; align-items: center; text-decoration: none; color: inherit;">
-                                <img src="asset/images/logo/logo.jpeg" alt="LOGO" style="width: 50px; height: 50px; border-radius: 8px;">
+                            <a href="index.html" class="logo-site"
+                                style="display: flex; flex-direction: row; justify-content: center; align-items: center; text-decoration: none; color: inherit;">
+                                <img src="asset/images/logo/logo.jpeg" alt="LOGO"
+                                    style="width: 50px; height: 50px; border-radius: 8px;">
                                 <p>BluePrint Media</p>
                             </a>
                         </div>
@@ -441,7 +615,7 @@
         <!-- /Section Hero -->
 
         <!-- START: ISOLATED FEATURE SECTION -->
-        <section class="section-feature">
+        <section class="section-feature" id="our-work">
             <!-- == Head Section -->
             <div class="sect-header">
                 <div class="container">
@@ -449,11 +623,12 @@
                         <p class="s-number_order wg-counter">
                             [ <span class="text-white">0<span class="odometer" data-number="2">0</span></span> / 09 ]
                         </p>
-                        <p class="s-label">[ <span class="text-white hacker-text_transform">OUR WORK</span> ]</p>
+                        <p class="s-label">[ <span class="text-white hacker-text_transform">PROJECT DOSSIER</span> ]</p>
                     </div>
                 </div>
             </div>
             <span class="br-line"></span>
+
             <!-- == Tagline Section -->
             <div class="sect-tagline">
                 <div class="container">
@@ -461,113 +636,226 @@
                         <span class="hafl-plus pst-left_bot wow bounceInScale"></span>
                         <span class="hafl-plus pst-right_bot wow bounceInScale"></span>
                         <p class="s-name text-caption font-2">
-                            <span class="bar-group type-left">
-                                <span class="bar_center"></span>
-                            </span>
+                            <span class="bar-group type-left"><span class="bar_center"></span></span>
                             <span class="hacker-text_transform no-delay">
-                                PROVEN RESULTS FOR SERVICE-BASED BUSINESSES
+                                EXECUTED CAMPAIGNS & GROWTH DATA
                             </span>
-                            <span class="bar-group type-right">
-                                <span class="bar_center"></span>
-                            </span>
+                            <span class="bar-group type-right"><span class="bar_center"></span></span>
                         </p>
                     </div>
                 </div>
             </div>
             <span class="br-line"></span>
-            <!-- == Main Section -->
-            <div class="sect-main flat-animate-tab">
-                <div class="s-img_item wow bounceInScale">
+
+            <!-- == Main Grid Section -->
+            <div class="sect-main">
+                <div class="s-img_item wow bounceInScale" style="z-index: 0;">
                     <img class="lazyload" src="asset/images/section/smoke-blue.webp"
-                        data-src="asset/images/section/smoke-blue.webp" alt="Item">
+                        data-src="asset/images/section/smoke-blue.webp" alt="Effect">
                 </div>
 
-                <div class="container iso-tabs-container"> <!-- Custom container class -->
+                <div class="container position-relative" style="z-index: 1;">
                     <div class="sect-title wow fadeInUp">
                         <h2 class="s-title font-3">
-                            Real Results, Real Growth.
+                            Market Dominance. <br>
+                            <span style="color: var(--primary);">Deployed.</span>
                         </h2>
                         <p class="s-sub_title">
-                            We're proud of the work we do and the results we deliver.
+                            From local detailing shops to global automotive giants.
                         </p>
                     </div>
 
-                    <span class="br-line"></span>
-                    <div class="container">
-                        <div class="position-relative">
-                            <!-- Custom Navigation -->
-                            <nav class="iso-tabs-nav position-relative mx-1">
-                                <a href="#" class="iso-tab-trigger is-active"
-                                    data-tab-target="#iso-restaurants">Restaurants</a>
-                                <a href="#" class="iso-tab-trigger" data-tab-target="#iso-autoshops">Auto Shops</a>
-                            </nav>
-                            <span class="hafl-plus pst-left_bot item_bot wow bounceInScale"></span>
-                            <span class="hafl-plus pst-right_bot item_bot wow bounceInScale"></span>
-                        </div>
-                    </div>
+                    <!-- THE NEW WORK GRID -->
+                    <div class="work-grid-container">
 
-                    <!-- Custom Content Area -->
-                    <div class="iso-tabs-content">
-                        <!-- Panel 1: Restaurants -->
-                        <div class="iso-tab-panel is-active" id="iso-restaurants">
-                            <div class="feature-grid">
-                                <a href="#" class="grid-item">
-                                    <img class="grid-item-img lazyload"
-                                        src="https://blueprint-media.vercel.app/assets/restuarant-Da7X3wrt.jpeg"
-                                        data-src="https://blueprint-media.vercel.app/assets/restuarant-Da7X3wrt.jpeg"
-                                        alt="Concept Art">
-                                    <div class="grid-item-content">
-                                        <h5 class="grid-item-title">Divan Restaurant – UGC Pack</h5>
-                                        <p class="grid-item-description">3.5x CTR vs. avg</p>
-                                    </div>
-                                </a>
-                                <a href="#" class="grid-item">
-                                    <img class="grid-item-img lazyload"
-                                        src="https://blueprint-media.vercel.app/assets/nilesha-DuW0ohDQ.jpeg"
-                                        data-src="https://blueprint-media.vercel.app/assets/nilesha-DuW0ohDQ.jpeg"
-                                        alt="Product Mockups">
-                                    <div class="grid-item-content">
-                                        <h5 class="grid-item-title">Neisha Thai - reels sprint</h5>
-                                        <p class="grid-item-description">4.9★ avg from 500+</p>
-                                    </div>
-                                </a>
-                                <a href="#" class="grid-item">
-                                    <img class="grid-item-img lazyload"
-                                        src="https://blueprint-media.vercel.app/assets/hungry-DX_4qjGd.jpeg"
-                                        data-src="https://blueprint-media.vercel.app/assets/hungry-DX_4qjGd.jpeg"
-                                        alt="Social Media Graphics">
-                                    <div class="grid-item-content">
-                                        <h5 class="grid-item-title">Hangry Joes - Social media engine</h5>
-                                        <p class="grid-item-description">4.9★ avg from 500+</p>
-                                    </div>
-                                </a>
+                        <!-- 1. Nissan (Featured Card) -->
+                        <div class="work-card featured wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="card-image-wrapper">
+                                <!-- Using a car image placeholder -->
+                                <img src="https://cdn-ds.com/media/sz_153441/1075/loc-nissan-glen-burnie_d6.jpg"
+                                    class="card-bg-img" alt="Nissan">
+                                <div class="card-logo-overlay">
+                                    <div class="card-logo-text" style="font-family: sans-serif; font-weight: 800;">
+                                        NISSAN</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-tags">
+                                    <span class="card-tag highlight">Enterprise</span>
+                                    <span class="card-tag">Ad Production</span>
+                                </div>
+                                <h4 class="card-title">Nissan</h4>
+                                <div class="card-stat">
+                                    <i class="icon-check"></i> <span class="stat-value">High-End</span> Ad Creatives
+                                </div>
+                                <div class="card-stat">
+                                    <i class="icon-check"></i> Global Brand Standards
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Panel 2: AutoShops -->
-                        <div class="iso-tab-panel" id="iso-autoshops">
-                            <div class="feature-grid">
-                                <a href="#" class="grid-item">
-                                    <img class="grid-item-img lazyload"
-                                        src="https://blueprint-media.vercel.app/assets/peak-B7puq7F9.jpeg"
-                                        data-src="https://blueprint-media.vercel.app/assets/peak-B7puq7F9.jpeg"
-                                        alt="Concept Art">
-                                    <div class="grid-item-content">
-                                        <h5 class="grid-item-title">PeakMods USA - social media growth</h5>
-                                        <p class="grid-item-description">+241% IG reach</p>
-                                    </div>
-                                </a>
+                        <!-- 2. PeakMods (Auto Shop) -->
+                        <div class="work-card wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="card-image-wrapper">
+                                <img src="https://blueprint-media.vercel.app/assets/peak-B7puq7F9.jpeg"
+                                    class="card-bg-img" alt="PeakMods">
+                                <div class="card-logo-overlay">
+                                    <div class="card-logo-text">PEAKMODS</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-tags">
+                                    <span class="card-tag highlight">Growth</span>
+                                    <span class="card-tag">Auto Mods</span>
+                                </div>
+                                <h4 class="card-title">PeakMods USA</h4>
+                                <div class="card-stat">
+                                    <span class="stat-value">+241%</span> Instagram Reach
+                                </div>
+                                <div class="card-stat">
+                                    <span class="stat-value">Record</span> Social Engagement
+                                </div>
                             </div>
                         </div>
-                       
+
+                        <!-- 3. Nebeyus Detailing -->
+                        <div class="work-card wow fadeInUp" data-wow-delay="0.3s">
+                            <div class="card-image-wrapper">
+                                <img src="https://scontent.cdninstagram.com/v/t51.82787-15/540473821_18220580899305984_8386667065712113266_n.jpg?stp=dst-jpegr_e35_p720x720_tt6&_nc_cat=111&ig_cache_key=MzcxMTM5MTU4Mzc1NDU5ODcwMA%3D%3D.3-ccb1-7&ccb=1-7&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTkyMC5oZHIuQzMifQ%3D%3D&_nc_ohc=tuHtsOa9fuUQ7kNvwETgKYB&_nc_oc=Adm9klNIbJ421uvNA3j0XP1OIexb1YCwjcbEhq-o9iv3scPWaTsanSFNYq_s5244VFs&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&se=-1&_nc_ht=scontent.cdninstagram.com&_nc_gid=rRPzMDNG4zG1qCs_vRz7Og&oh=00_Afh58xBhjOZWTlWQFP2a7vDLlkF8500B2ukq7RdyNinoNA&oe=6922ABE7"
+                                    class="card-bg-img" alt="Detailing">
+                                <div class="card-logo-overlay">
+                                    <div class="card-logo-text">Nebeyus</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-tags">
+                                    <span class="card-tag highlight">Lead Gen</span>
+                                    <span class="card-tag">Detailing</span>
+                                </div>
+                                <h4 class="card-title">Nebeyus Detailing</h4>
+                                <div class="card-stat">
+                                    <span class="stat-value">Full</span> Calendar Booking
+                                </div>
+                                <div class="card-stat">
+                                    <span class="stat-value">Auto</span> AI Lead Capture
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. Fairfax Shine -->
+                        <div class="work-card wow fadeInUp" data-wow-delay="0.4s">
+                            <div class="card-image-wrapper">
+                                <img src="https://fairfaxshine.com/assets/images/gallery/BMW-840i-19-1024x683.jpg"
+                                    class="card-bg-img" alt="Fairfax Shine">
+                                <div class="card-logo-overlay">
+                                    <div class="card-logo-text">Fairfax Shine</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-tags">
+                                    <span class="card-tag highlight">Ads</span>
+                                    <span class="card-tag">Auto Care</span>
+                                </div>
+                                <h4 class="card-title">Fairfax Shine</h4>
+                                <div class="card-stat">
+                                    <span class="stat-value">High</span> ROAS Campaigns
+                                </div>
+                                <div class="card-stat">
+                                    <span class="stat-value">24/7</span> AI Follow-up
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. Neisha Thai -->
+                        <div class="work-card wow fadeInUp" data-wow-delay="0.5s">
+                            <div class="card-image-wrapper">
+                                <img src="https://blueprint-media.vercel.app/assets/nilesha-DuW0ohDQ.jpeg"
+                                    class="card-bg-img" alt="Neisha">
+                                <div class="card-logo-overlay">
+                                    <div class="card-logo-text">NEISHA</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-tags">
+                                    <span class="card-tag highlight">Social</span>
+                                    <span class="card-tag">Restaurant</span>
+                                </div>
+                                <h4 class="card-title">Neisha Thai</h4>
+                                <div class="card-stat">
+                                    <span class="stat-value">Reels</span> Sprint Campaign
+                                </div>
+                                <div class="card-stat">
+                                    <span class="stat-value">4.9★</span> Avg Rating
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6. Zayee Shopify -->
+                        <div class="work-card wow fadeInUp" data-wow-delay="0.6s">
+                            <div class="card-image-wrapper">
+                                <img src="https://envisionecommerce.com/wp-content/uploads/2022/09/shopify-for-ecommerce-store-development.jpg"
+                                    class="card-bg-img" alt="Ecommerce">
+                                <div class="card-logo-overlay">
+                                    <div class="card-logo-text">Zayee</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-tags">
+                                    <span class="card-tag highlight">E-Com</span>
+                                    <span class="card-tag">Shopify</span>
+                                </div>
+                                <h4 class="card-title">Zayee Store</h4>
+                                <div class="card-stat">
+                                    <span class="stat-value">Scale</span> Paid Social Ads
+                                </div>
+                                <div class="card-stat">
+                                    <span class="stat-value">Optimized</span> Funnel Structure
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- 7. CLASSIFIED / NDA CLIENTS -->
+                        <div class="work-card wow fadeInUp" data-wow-delay="0.6s">
+                            <div class="card-image-wrapper">
+                                <img src="asset/images/section/gradient-ring-bg.webp" class="card-bg-img"
+                                    alt="Classified">
+                                <div class="card-logo-overlay">
+                                    <div class="card-logo-text">CONFIDENTIAL</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-tags">
+                                    <span class="card-tag" style="border-color: red; color: red;">NDA SIGNED</span>
+                                </div>
+                                <h4 class="card-title">Various Private Clients</h4>
+                                <div class="card-stat">
+                                    Client: <span class="redacted-bar">REDACTED</span>
+                                </div>
+                                <div class="card-stat">
+                                    Results: <span class="stat-value">Top 1%</span> in niche
+                                </div>
+                                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 10px;">
+                                    High-volume campaigns managed under strict non-disclosure agreements.
+                                </p>
+                            </div>
+                        </div>
+
+                        
+
                     </div>
+                    <!-- End Grid -->
+
+                    <span class="hafl-plus pst-left_bot item_bot wow bounceInScale"></span>
+                    <span class="hafl-plus pst-right_bot item_bot wow bounceInScale"></span>
                 </div>
             </div>
             <span class="br-line"></span>
+
             <!-- == Bottom Section -->
             <div class="sect-bottom">
                 <div class="container">
-                    <div class="box-hacker has-overlay_linear">
+                    <div class="box-hacker has-overlay_linear mx-1">
                         <p class="hacker-text text-caption font-2 text-uppercase hackerText">
                             qW8bL2nRM4ZpYk5gJfXvCt1uHdEo93NTaVxBYmOe7rPQnKDlcUs0AjzhFiGSwLXtRpUo6NMJvqa7bT2EfyCdx9KWZhgL1nFMR3YUJ5toepXAGvqBzNcdwskLm4iT7OPuVHxayJZErm5QbgCnX1UL2D9ptYfOEK0sWhRAgJmzliNu67BXFoQYPCHtvnwMJeaZKRxdo3TfLUGqc48sbE9NYpJAgmWTVrhXxLFo517zkidC3
                         </p>
@@ -677,8 +965,7 @@
                 <div class="container">
                     <div class="box-hacker has-overlay_linear mx-1">
                         <p class="hacker-text text-caption font-2 text-uppercase hackerText">
-                            Automation and intelligence to power your business growth. We handle the tech so you can
-                            focus on your customers.
+                            qW8bL2nRM4ZpYk5gJfXvCt1uHdEo93NTaVxBYmOe7rPQnKDlcUs0AjzhFiGSwLXtRpUo6NMJvqa7bT2EfyCdx9KWZhgL1nFMR3YUJ5toepXAGvqBzNcdwskLm4iT7OPuVHxayJZErm5QbgCnX1UL2D9ptYfOEK0sWhRAgJmzliNu67BXFoQYPCHtvnwMJeaZKRxdo3TfLUGqc48sbE9NYpJAgmWTVrhXxLFo517zkidC3
                         </p>
                     </div>
                 </div>
@@ -808,8 +1095,7 @@
                 <div class="container">
                     <div class="box-hacker has-overlay_linear mx-1">
                         <p class="hacker-text text-caption font-2 text-uppercase hackerText">
-                            Our process: streamlined, transparent, and focused on delivering measurable results for your
-                            business.
+                            qW8bL2nRM4ZpYk5gJfXvCt1uHdEo93NTaVxBYmOe7rPQnKDlcUs0AjzhFiGSwLXtRpUo6NMJvqa7bT2EfyCdx9KWZhgL1nFMR3YUJ5toepXAGvqBzNcdwskLm4iT7OPuVHxayJZErm5QbgCnX1UL2D9ptYfOEK0sWhRAgJmzliNu67BXFoQYPCHtvnwMJeaZKRxdo3TfLUGqc48sbE9NYpJAgmWTVrhXxLFo517zkidC3
                         </p>
                     </div>
                 </div>
@@ -1305,7 +1591,8 @@
     <div class="offcanvas offcanvas-start canvas-mb" id="mobileMenu">
         <div class="canvas-header">
             <div class="logo-site">
-                <img class="lazyload" src="asset/images/logo/logo.jpeg" data-src="asset/images/logo/logo.jpeg" alt="LOGO">
+                <img class="lazyload" src="asset/images/logo/logo.jpeg" data-src="asset/images/logo/logo.jpeg"
+                    alt="LOGO">
             </div>
             <div class="btn_group">
                 <a href="#" class="tf-btn style-2">
@@ -1462,41 +1749,41 @@
     </script>
 
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Find our custom tab component container
-    const tabsContainer = document.querySelector('.iso-tabs-container');
-    if (!tabsContainer) {
-        return; // If the component doesn't exist on the page, do nothing
-    }
-
-    // Get all the navigation triggers and content panels within this component
-    const tabTriggers = tabsContainer.querySelectorAll('.iso-tab-trigger');
-    const tabPanels = tabsContainer.querySelectorAll('.iso-tab-panel');
-
-    // Add a click event listener to each trigger
-    tabTriggers.forEach(function(trigger) {
-        trigger.addEventListener('click', function(e) {
-            e.preventDefault(); // Stop the link from navigating
-
-            // Get the ID of the target panel from the 'data-tab-target' attribute
-            const targetId = this.getAttribute('data-tab-target');
-            const targetPanel = document.querySelector(targetId);
-            
-            // --- This is the core logic ---
-
-            // 1. Deactivate all triggers and panels first
-            tabTriggers.forEach(t => t.classList.remove('is-active'));
-            tabPanels.forEach(p => p.classList.remove('is-active'));
-
-            // 2. Activate the clicked trigger and its corresponding panel
-            this.classList.add('is-active');
-            if (targetPanel) {
-                targetPanel.classList.add('is-active');
+        document.addEventListener('DOMContentLoaded', function () {
+            // Find our custom tab component container
+            const tabsContainer = document.querySelector('.iso-tabs-container');
+            if (!tabsContainer) {
+                return; // If the component doesn't exist on the page, do nothing
             }
+
+            // Get all the navigation triggers and content panels within this component
+            const tabTriggers = tabsContainer.querySelectorAll('.iso-tab-trigger');
+            const tabPanels = tabsContainer.querySelectorAll('.iso-tab-panel');
+
+            // Add a click event listener to each trigger
+            tabTriggers.forEach(function (trigger) {
+                trigger.addEventListener('click', function (e) {
+                    e.preventDefault(); // Stop the link from navigating
+
+                    // Get the ID of the target panel from the 'data-tab-target' attribute
+                    const targetId = this.getAttribute('data-tab-target');
+                    const targetPanel = document.querySelector(targetId);
+
+                    // --- This is the core logic ---
+
+                    // 1. Deactivate all triggers and panels first
+                    tabTriggers.forEach(t => t.classList.remove('is-active'));
+                    tabPanels.forEach(p => p.classList.remove('is-active'));
+
+                    // 2. Activate the clicked trigger and its corresponding panel
+                    this.classList.add('is-active');
+                    if (targetPanel) {
+                        targetPanel.classList.add('is-active');
+                    }
+                });
+            });
         });
-    });
-});
-</script>
+    </script>
 
 </body>
 
