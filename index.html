@@ -25,27 +25,146 @@
     <link rel="shortcut icon" href="asset/images/logo/favicon.svg">
     <link rel="apple-touch-icon-precomposed" href="asset/images/logo/favicon.svg">
 
-    <!-- Custom CSS for Modals -->
+    <!-- Custom CSS -->
     <style>
-        /* Make service boxes clickable and add hover effect */
+        /* --- CRITICAL FIX: Background Color Fallback --- */
+    
+        
+        /* Fix for glitching text */
+        h1, h2, h3, h4, h5, h6, .s-title, .sect-title {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transform: translateZ(0); 
+        }
+
+        /* --- SERVICE BOX STYLES (EXPANDABLE) --- */
         #services .box-icon-text {
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.02);
+            padding: 30px;
+            border-radius: 12px;
         }
 
         #services .box-icon-text:hover {
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.05);
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1);
         }
 
-        .work-grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        #services .box-icon-text.active {
+            background: rgba(0, 255, 255, 0.05);
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(0, 255, 255, 0.1);
+        }
+
+        .service-details {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.5s ease, margin-top 0.3s ease;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .box-icon-text.active .service-details {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .service-toggle-icon {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s ease;
+        }
+
+        .service-toggle-icon::before, .service-toggle-icon::after {
+            content: '';
+            position: absolute;
+            background-color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .service-toggle-icon::before { width: 100%; height: 2px; }
+        .service-toggle-icon::after { height: 100%; width: 2px; }
+
+        .box-icon-text.active .service-toggle-icon {
+            transform: rotate(135deg);
+        }
+
+
+        /* --- PROJECT DOSSIER CAROUSEL & NAVIGATION --- */
+        .dossier-carousel-container {
+            width: 100%;
+            overflow: hidden;
+            padding: 0 0 40px 0;
+            position: relative;
+        }
+
+        /* Controls styling */
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+
+        .dossier-nav-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .dossier-nav-btn:hover {
+            border-color: var(--primary);
+            background: rgba(0, 255, 255, 0.1);
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .dossier-carousel {
+            display: flex;
             gap: 30px;
-            padding: 20px 0;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 20px;
+            -webkit-overflow-scrolling: touch;
+            /* Hide scrollbar for cleaner look since we have buttons */
+            scrollbar-width: none; 
+            -ms-overflow-style: none;  
+            scroll-behavior: smooth;
+        }
+
+        .dossier-carousel::-webkit-scrollbar {
+            display: none;
         }
 
         .work-card {
+            flex: 0 0 400px;
+            scroll-snap-align: start;
             position: relative;
             background: rgba(12, 12, 31, 0.8);
             border: 1px solid rgba(0, 255, 255, 0.15);
@@ -53,14 +172,20 @@
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
-            height: 100%;
+            height: 450px;
             display: flex;
             flex-direction: column;
         }
 
-        /* Hover Effects */
+        @media (max-width: 768px) {
+            .work-card {
+                flex: 0 0 85vw; /* Almost full width on mobile */
+                height: 400px;
+            }
+        }
+
         .work-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             border-color: var(--primary);
             box-shadow: 0 15px 40px rgba(0, 255, 255, 0.15);
         }
@@ -70,14 +195,9 @@
             opacity: 0.4;
         }
 
-        .work-card:hover .card-overlay {
-            background: linear-gradient(to top, rgba(8, 8, 18, 1) 0%, rgba(8, 8, 18, 0.4) 100%);
-        }
-
-        /* Card Image Area */
         .card-image-wrapper {
             position: relative;
-            height: 220px;
+            height: 55%;
             overflow: hidden;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
@@ -109,17 +229,16 @@
             letter-spacing: 2px;
         }
 
-        /* Card Content Area */
         .card-content {
             padding: 25px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             position: relative;
             background: linear-gradient(180deg, rgba(12, 12, 31, 0) 0%, rgba(8, 8, 18, 1) 100%);
         }
 
-        /* Badges */
         .card-tags {
             display: flex;
             gap: 10px;
@@ -146,7 +265,6 @@
             box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
         }
 
-        /* Text Styles */
         .card-title {
             font-family: 'Techno', sans-serif;
             font-size: 1.4rem;
@@ -169,169 +287,32 @@
             font-weight: 700;
         }
 
-        /* Featured Card (Nissan) */
+        /* Featured Card */
         .work-card.featured {
             border: 1px solid var(--primary);
             box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
         }
-
+        
         .work-card.featured .card-tag.highlight {
             background: var(--primary);
             color: #000;
             font-weight: bold;
         }
 
-        /* NDA / Classified Card */
-        .work-card.classified .card-bg-img {
-            filter: blur(8px) grayscale(100%);
-        }
-
-        .work-card.classified .card-logo-text {
-            background: #fff;
-            color: #000;
-            padding: 5px 15px;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            transform: translate(-50%, -50%) rotate(-5deg);
-        }
-
-        .redacted-bar {
-            display: inline-block;
-            background: #fff;
-            color: #000;
-            padding: 0 5px;
-            margin-left: 5px;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .work-grid-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* --- NEW CUSTOM MODAL STYLES --- */
-
-        /* Animation for modal entry */
-        @keyframes modalFadeInUp {
-            from {
-                opacity: 0;
-                transform: translate(0, 30px) scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: translate(0, 0) scale(1);
-            }
-        }
-
-        .modal.fade .modal-dialog {
-            animation: modalFadeInUp 0.5s ease-out forwards;
-        }
-
-        .modal {
-            padding: 20px;
-            border-radius: 15, ;
-        }
-
-
-
-        .modal-content {
-            background-color: #080812;
-            /* Slightly darker than before */
-            border: 1px solid var(--primary-20);
-            /* Use theme accent color with opacity */
-            color: #ffffff;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.15), inset 0 0 15px rgba(0, 255, 255, 0.05);
-            /* Glow effect */
-            backdrop-filter: blur(10px);
-            background-color: rgba(13, 13, 26, 0.9);
-            /* Semi-transparent background */
-        }
-
-        .modal-header {
-            border-bottom: 1px solid var(--primary-20);
-            padding: 1rem 1.5rem;
-        }
-
-        .modal-header .modal-title {
-            font-family: 'Techno', sans-serif;
-            font-size: 1.5rem;
-            color: var(--primary);
-            /* Use theme accent color */
-            text-shadow: 0 0 10px var(--primary-40);
-            /* Title glow */
-        }
-
-        .modal-header .modal-title::before {
-            content: "[ DETAILS ]// ";
-            opacity: 0.5;
-            font-size: 1.2rem;
-        }
-
-        .modal-body {
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.85);
-            padding: 1.5rem;
-        }
-
-        .modal-body p {
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-body p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Style for highlighted text inside the modal */
-        .modal-body strong {
-            color: var(--primary);
-            font-weight: 500;
-        }
-
-        .btn-close {
-            background: none;
-            opacity: 0.7;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            filter: invert(1) grayscale(100%) brightness(200%);
-        }
-
-        .btn-close:hover {
-            opacity: 1;
-            transform: rotate(90deg) scale(1.1);
-            filter: none;
-            /* remove filter to show color */
-            color: var(--primary);
-            /* Use theme accent color on hover */
-        }
-
+        /* --- Existing Styles --- */
         .testimonial-screenshot-item {
             display: inline-block;
-            /* Aligns items correctly in the marquee */
             vertical-align: middle;
             margin: 0 20px;
-            /* Spacing between phones */
             perspective: 1000px;
-            /* For 3D hover effect */
         }
 
         .phone-mockup {
             position: relative;
             width: 280px;
-            /* Adjust width as needed */
-            /* aspect-ratio: 9 / 19.5; */
-            /* A modern phone screen ratio */
             background-color: #0c0c1f;
-            /* Dark background for the frame */
             border-radius: 40px;
-            /* Generous rounding for a phone look */
             padding: 10px;
-            /* Creates the phone's bezel */
             border: 2px solid rgba(0, 255, 255, 0.15);
             box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -349,73 +330,6 @@
             height: 100%;
             object-fit: cover;
             border-radius: 30px;
-            /* Inner radius for the screen */
-        }
-
-        @keyframes isoFadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Style the navigation bar to match the original */
-        .iso-tabs-nav {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            border: 1px solid var(--primary-20);
-            padding: 10px;
-            position: relative;
-            margin-top: 40px;
-        }
-
-        /* Style the tab trigger buttons */
-        .iso-tab-trigger {
-            padding: 12px 24px;
-            font-family: 'Techno', sans-serif;
-            color: #fff;
-            text-decoration: none;
-            border: 1px solid transparent;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        .iso-tab-trigger:hover {
-            color: var(--primary);
-        }
-
-        /* Style for the ACTIVE tab trigger */
-        .iso-tab-trigger.is-active {
-            background-color: var(--primary-10);
-            border-color: var(--primary-40);
-            color: var(--primary);
-            text-shadow: 0 0 10px var(--primary);
-        }
-
-        /* The content area wrapper */
-        .iso-tabs-content {
-            margin-top: 40px;
-            position: relative;
-        }
-
-        /* By default, all content panels are COMPLETELY HIDDEN */
-        .iso-tab-panel {
-            display: none;
-        }
-
-        /* The ACTIVE panel is made visible */
-        .iso-tab-panel.is-active {
-            display: block;
-            /* Apply our animation to the grid inside the active panel */
-            animation: isoFadeInUp 0.6s ease-out forwards;
         }
     </style>
 
@@ -436,8 +350,10 @@
             <div class="temp"></div>
             <div class="bg-texture"></div>
         </div>
+        
+        <!-- VIDEO SECTION -->
         <div class="hero-video">
-            <video class="" muted autoplay loop playsinline>
+            <video class="" muted autoplay loop playsinline preload="auto" poster="asset/images/video/image.png">
                 <source src="asset/images/video/BlackHole.mp4" type="video/mp4">
             </video>
             <div class="orther-overlay"></div>
@@ -453,7 +369,7 @@
                                 style="display: flex; flex-direction: row; justify-content: center; align-items: center; text-decoration: none; color: inherit;">
                                 <img src="asset/images/logo/logo.png" alt="LOGO"
                                     style=" height: 50px; border-radius: 8px;">
-                            
+
                             </a>
                         </div>
                     </div>
@@ -467,17 +383,17 @@
                                     </a>
                                 </li>
                                 <li class="menu-item">
+                                    <a href="#our-work"
+                                        class="tf-btn style-transparent text-body-3 animate-btn scroll-link">
+                                        Projects
+                                    </a>
+                                </li>
+                                <li class="menu-item">
                                     <a href="#workflow"
                                         class="tf-btn style-transparent text-body-3 animate-btn scroll-link">
                                         Workflow
                                     </a>
                                 </li>
-                                <!-- <li class="menu-item">
-                                    <a href="#pricing"
-                                        class="tf-btn style-transparent text-body-3 animate-btn scroll-link">
-                                        Pricing
-                                    </a>
-                                </li> -->
                                 <li class="menu-item">
                                     <a href="#FAQs"
                                         class="tf-btn style-transparent text-body-3 animate-btn scroll-link">
@@ -491,7 +407,8 @@
                         <div class="header-right">
                             <div class="btn_group">
 
-                                <a href="https://calendar.app.google/Pz55euQNrsK8WBEg7" target="_blank" class="tf-btn text-body-3 style-2 animate-btn animate-dark">
+                                <a href="https://calendar.app.google/Pz55euQNrsK8WBEg7" target="_blank"
+                                    class="tf-btn text-body-3 style-2 animate-btn animate-dark">
                                     Get started
                                 </a>
                                 <a href="#mobileMenu" class="btn-menu_mobile d-lg-none" data-bs-toggle="offcanvas">
@@ -504,7 +421,6 @@
             </div>
         </header>
         <span class="br-line"></span>
-
 
         <section class="section-hero">
             <!-- == Head Section -->
@@ -612,11 +528,106 @@
             </div>
             <span class="br-line"></span>
         </section>
-        <!-- /Section Hero -->
 
-        <!-- START: ISOLATED FEATURE SECTION -->
+        <!-- Section Testimonial -->
+        <section class="section-testimonial">
+            <div class="sect-header">
+                <div class="container">
+                    <div class="s-meta text-caption font-2">
+                        <p class="s-number_order wg-counter">
+                            [ <span class="text-white">0<span class="odometer" data-number="6">0</span></span> / 09 ]
+                        </p>
+                        <p class="s-label">[ <span class="text-white hacker-text_transform">RESULTS</span> ]</p>
+                    </div>
+                </div>
+            </div>
+            <span class="br-line"></span>
+            <div class="sect-tagline">
+                <div class="container">
+                    <div class="sect-tagline_inner">
+                        <span class="hafl-plus pst-left_bot wow bounceInScale"></span>
+                        <span class="hafl-plus pst-right_bot wow bounceInScale"></span>
+                        <h6 class="s-name text-caption font-2">
+                            <span class="bar-group type-left"><span class="bar_center"></span></span>
+                            <span class="hacker-text_transform no-delay">REAL RESULTS FROM INDUSTRY LEADERS.</span>
+                            <span class="bar-group type-right"><span class="bar_center"></span></span>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <span class="br-line"></span>
+            <div class="sect-main">
+                <div class="s-img_item wow bounceInScale">
+                    <div class="globe-cont">
+                        <canvas id="cobe" width="700" height="700"></canvas>
+                    </div>
+                    <img class="lazyload img-2" src="asset/images/section/color-bg.webp"
+                        data-src="asset/images/section/color-bg.webp" alt="Image">
+                </div>
+                <div class="container">
+                    <div class="sect-title wow fadeInUp">
+                        <h2 class="s-title font-3 m-0">
+                            Trusted by businesses <br>
+                            just like yours.
+                        </h2>
+                    </div>
+                    <div class="testimonial-slide-wrap">
+                        <div class="overflow-hidden has-overlay_linear type-2 mx-1">
+                            <div class="infiniteSlide infiniteSlide-tes">
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/2.PNG" data-src="asset/images/testimonials/2.PNG" alt="Testimonial Screenshot 2">
+                                    </div>
+                                </div>
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/4.PNG" data-src="asset/images/testimonials/4.PNG" alt="Testimonial Screenshot 4">
+                                    </div>
+                                </div>
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/11.PNG" data-src="asset/images/testimonials/11.PNG" alt="Testimonial Screenshot 11">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="infiniteSlide infiniteSlide-tes" data-style="right">
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/6.PNG" data-src="asset/images/testimonials/6.PNG" alt="Testimonial Screenshot 6">
+                                    </div>
+                                </div>
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/7.PNG" data-src="asset/images/testimonials/7.PNG" alt="Testimonial Screenshot 7">
+                                    </div>
+                                </div>
+                                <div class="testimonial-screenshot-item">
+                                    <div class="phone-mockup">
+                                        <img class="screenshot lazyload" src="asset/images/testimonials/10.PNG" data-src="asset/images/testimonials/10.PNG" alt="Testimonial Screenshot 10">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="hafl-plus pst-left_bot item_bot z-1 wow bounceInScale"></span>
+                        <span class="hafl-plus pst-right_bot item_bot z-1 wow bounceInScale"></span>
+                    </div>
+                </div>
+            </div>
+            <span class="br-line"></span>
+            <div class="sect-bottom">
+                <div class="container">
+                    <div class="box-hacker has-overlay_linear mx-1">
+                        <p class="hacker-text text-caption font-2 text-uppercase hackerText">
+                            qW8bL2nRM4ZpYk5gJfXvCt1uHdEo93NTaVxBYmOe7rPQnKDlcUs0AjzhFiGSwLXtRpUo6NMJvqa7bT2EfyCdx9KWZhgL1nFMR3YUJ5toepXAGvqBzNcdwskLm4iT7OPuVHxayJZErm5QbgCnX1UL2D9ptYfOEK0sWhRAgJmzliNu67BXFoQYPCHtvnwMJeaZKRxdo3TfLUGqc48sbE9NYpJAgmWTVrhXxLFo517zkidC3
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <span class="br-line"></span>
+        </section>
+
+        <!-- UPDATED FEATURE SECTION: AUTO-SCROLL CAROUSEL + BUTTONS -->
         <section class="section-feature" id="our-work">
-            <!-- == Head Section -->
             <div class="sect-header">
                 <div class="container">
                     <div class="s-meta text-caption font-2">
@@ -628,8 +639,6 @@
                 </div>
             </div>
             <span class="br-line"></span>
-
-            <!-- == Tagline Section -->
             <div class="sect-tagline">
                 <div class="container">
                     <div class="sect-tagline_inner">
@@ -637,9 +646,7 @@
                         <span class="hafl-plus pst-right_bot wow bounceInScale"></span>
                         <p class="s-name text-caption font-2">
                             <span class="bar-group type-left"><span class="bar_center"></span></span>
-                            <span class="hacker-text_transform no-delay">
-                                EXECUTED CAMPAIGNS & GROWTH DATA
-                            </span>
+                            <span class="hacker-text_transform no-delay">EXECUTED CAMPAIGNS & GROWTH DATA</span>
                             <span class="bar-group type-right"><span class="bar_center"></span></span>
                         </p>
                     </div>
@@ -647,14 +654,15 @@
             </div>
             <span class="br-line"></span>
 
-            <!-- == Main Grid Section -->
             <div class="sect-main">
                 <div class="s-img_item wow bounceInScale" style="z-index: 0;">
-                    <img class="lazyload" src="asset/images/section/smoke-blue.webp"
-                        data-src="asset/images/section/smoke-blue.webp" alt="Effect">
+                    <img class="lazyload" src="asset/images/section/smoke-blue.webp" data-src="asset/images/section/smoke-blue.webp" alt="Effect">
                 </div>
 
                 <div class="container position-relative" style="z-index: 1;">
+                    
+                    <!-- Title Row with Buttons -->
+
                     <div class="sect-title wow fadeInUp">
                         <h2 class="s-title font-3">
                             Market Dominance. <br>
@@ -662,191 +670,115 @@
                         </h2>
                     </div>
 
-                    <!-- THE NEW WORK GRID -->
-                    <div class="work-grid-container">
-
-                        <!-- 1. Nissan (Featured Card) -->
-                        <div class="work-card featured wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="card-image-wrapper">
-                                <!-- Using a car image placeholder -->
-                                <img src="https://cdn-ds.com/media/sz_153441/1075/loc-nissan-glen-burnie_d6.jpg"
-                                    class="card-bg-img" alt="Nissan">
-                                <div class="card-logo-overlay">
-                                    <div class="card-logo-text" style="font-family: sans-serif; font-weight: 800;">
-                                        NISSAN</div>
+                    <!-- NEW HORIZONTAL SCROLL CAROUSEL -->
+                    <div class="dossier-carousel-container" id="carouselContainer">
+                        <div class="dossier-carousel" id="workCarousel">
+                            <!-- 1. Nissan -->
+                            <div class="work-card featured">
+                                <div class="card-image-wrapper">
+                                    <img src="https://cdn-ds.com/media/sz_153441/1075/loc-nissan-glen-burnie_d6.jpg" class="card-bg-img" alt="Nissan">
+                                    <div class="card-logo-overlay">
+                                        <div class="card-logo-text" style="font-family: sans-serif; font-weight: 800;">NISSAN</div>
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-tags">
+                                        <span class="card-tag highlight">Enterprise</span>
+                                        <span class="card-tag">Ad Production</span>
+                                    </div>
+                                    <h4 class="card-title">Nissan</h4>
+                                    <div class="card-stat"><i class="icon-check"></i> <span class="stat-value">High-End</span> Ad Creatives</div>
+                                    <div class="card-stat"><i class="icon-check"></i> Global Brand Standards</div>
                                 </div>
                             </div>
-                            <div class="card-content">
-                                <div class="card-tags">
-                                    <span class="card-tag highlight">Enterprise</span>
-                                    <span class="card-tag">Ad Production</span>
+
+                            <!-- 2. PeakMods -->
+                            <div class="work-card">
+                                <div class="card-image-wrapper">
+                                    <img src="https://blueprint-media.vercel.app/assets/peak-B7puq7F9.jpeg" class="card-bg-img" alt="PeakMods">
+                                    <div class="card-logo-overlay"><div class="card-logo-text">PEAKMODS</div></div>
                                 </div>
-                                <h4 class="card-title">Nissan</h4>
-                                <div class="card-stat">
-                                    <i class="icon-check"></i> <span class="stat-value">High-End</span> Ad Creatives
+                                <div class="card-content">
+                                    <div class="card-tags"><span class="card-tag highlight">Growth</span><span class="card-tag">Auto Mods</span></div>
+                                    <h4 class="card-title">PeakMods USA</h4>
+                                    <div class="card-stat"><span class="stat-value">+241%</span> Instagram Reach</div>
+                                    <div class="card-stat"><span class="stat-value">Record</span> Social Engagement</div>
                                 </div>
-                                <div class="card-stat">
-                                    <i class="icon-check"></i> Global Brand Standards
+                            </div>
+
+                            <!-- 3. Nebeyus -->
+                            <div class="work-card">
+                                <div class="card-image-wrapper">
+                                    <img src="https://scontent.cdninstagram.com/v/t51.82787-15/540473821_18220580899305984_8386667065712113266_n.jpg?stp=dst-jpegr_e35_p720x720_tt6&_nc_cat=111&ig_cache_key=MzcxMTM5MTU4Mzc1NDU5ODcwMA%3D%3D.3-ccb1-7&ccb=1-7&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTkyMC5oZHIuQzMifQ%3D%3D&_nc_ohc=tuHtsOa9fuUQ7kNvwETgKYB&_nc_oc=Adm9klNIbJ421uvNA3j0XP1OIexb1YCwjcbEhq-o9iv3scPWaTsanSFNYq_s5244VFs&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&se=-1&_nc_ht=scontent.cdninstagram.com&_nc_gid=rRPzMDNG4zG1qCs_vRz7Og&oh=00_Afh58xBhjOZWTlWQFP2a7vDLlkF8500B2ukq7RdyNinoNA&oe=6922ABE7" class="card-bg-img" alt="Detailing">
+                                    <div class="card-logo-overlay"><div class="card-logo-text">Nebeyus</div></div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-tags"><span class="card-tag highlight">Lead Gen</span><span class="card-tag">Detailing</span></div>
+                                    <h4 class="card-title">Nebeyus Detailing</h4>
+                                    <div class="card-stat"><span class="stat-value">Full</span> Calendar Booking</div>
+                                    <div class="card-stat"><span class="stat-value">Auto</span> AI Lead Capture</div>
+                                </div>
+                            </div>
+
+                            <!-- 4. Fairfax Shine -->
+                            <div class="work-card">
+                                <div class="card-image-wrapper">
+                                    <img src="https://fairfaxshine.com/assets/images/gallery/BMW-840i-19-1024x683.jpg" class="card-bg-img" alt="Fairfax Shine">
+                                    <div class="card-logo-overlay"><div class="card-logo-text">Fairfax Shine</div></div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-tags"><span class="card-tag highlight">Ads</span><span class="card-tag">Auto Care</span></div>
+                                    <h4 class="card-title">Fairfax Shine</h4>
+                                    <div class="card-stat"><span class="stat-value">High</span> ROAS Campaigns</div>
+                                    <div class="card-stat"><span class="stat-value">24/7</span> AI Follow-up</div>
+                                </div>
+                            </div>
+
+                            <!-- 5. Neisha Thai -->
+                            <div class="work-card">
+                                <div class="card-image-wrapper">
+                                    <img src="https://blueprint-media.vercel.app/assets/nilesha-DuW0ohDQ.jpeg" class="card-bg-img" alt="Neisha">
+                                    <div class="card-logo-overlay"><div class="card-logo-text">NEISHA</div></div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-tags"><span class="card-tag highlight">Social</span><span class="card-tag">Restaurant</span></div>
+                                    <h4 class="card-title">Neisha Thai</h4>
+                                    <div class="card-stat"><span class="stat-value">Reels</span> Sprint Campaign</div>
+                                    <div class="card-stat"><span class="stat-value">4.9★</span> Avg Rating</div>
+                                </div>
+                            </div>
+
+                            <!-- 6. Hangry Joes -->
+                            <div class="work-card">
+                                <div class="card-image-wrapper">
+                                    <img src="https://blueprint-media.vercel.app/assets/hungry-DX_4qjGd.jpeg" class="card-bg-img" alt="Hangry Joes">
+                                    <div class="card-logo-overlay"><div class="card-logo-text">Hangry Joes</div></div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-tags"><span class="card-tag highlight">Social</span><span class="card-tag">Restaurant</span></div>
+                                    <h4 class="card-title">Hangry Joes</h4>
+                                    <div class="card-stat"><span class="stat-value">Scale</span> Paid Social Ads</div>
+                                    <div class="card-stat"><span class="stat-value">4.9★</span> Avg Rating</div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- 2. PeakMods (Auto Shop) -->
-                        <div class="work-card wow fadeInUp" data-wow-delay="0.2s">
-                            <div class="card-image-wrapper">
-                                <img src="https://blueprint-media.vercel.app/assets/peak-B7puq7F9.jpeg"
-                                    class="card-bg-img" alt="PeakMods">
-                                <div class="card-logo-overlay">
-                                    <div class="card-logo-text">PEAKMODS</div>
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <div class="card-tags">
-                                    <span class="card-tag highlight">Growth</span>
-                                    <span class="card-tag">Auto Mods</span>
-                                </div>
-                                <h4 class="card-title">PeakMods USA</h4>
-                                <div class="card-stat">
-                                    <span class="stat-value">+241%</span> Instagram Reach
-                                </div>
-                                <div class="card-stat">
-                                    <span class="stat-value">Record</span> Social Engagement
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 3. Nebeyus Detailing -->
-                        <div class="work-card wow fadeInUp" data-wow-delay="0.3s">
-                            <div class="card-image-wrapper">
-                                <img src="https://scontent.cdninstagram.com/v/t51.82787-15/540473821_18220580899305984_8386667065712113266_n.jpg?stp=dst-jpegr_e35_p720x720_tt6&_nc_cat=111&ig_cache_key=MzcxMTM5MTU4Mzc1NDU5ODcwMA%3D%3D.3-ccb1-7&ccb=1-7&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTkyMC5oZHIuQzMifQ%3D%3D&_nc_ohc=tuHtsOa9fuUQ7kNvwETgKYB&_nc_oc=Adm9klNIbJ421uvNA3j0XP1OIexb1YCwjcbEhq-o9iv3scPWaTsanSFNYq_s5244VFs&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&se=-1&_nc_ht=scontent.cdninstagram.com&_nc_gid=rRPzMDNG4zG1qCs_vRz7Og&oh=00_Afh58xBhjOZWTlWQFP2a7vDLlkF8500B2ukq7RdyNinoNA&oe=6922ABE7"
-                                    class="card-bg-img" alt="Detailing">
-                                <div class="card-logo-overlay">
-                                    <div class="card-logo-text">Nebeyus</div>
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <div class="card-tags">
-                                    <span class="card-tag highlight">Lead Gen</span>
-                                    <span class="card-tag">Detailing</span>
-                                </div>
-                                <h4 class="card-title">Nebeyus Detailing</h4>
-                                <div class="card-stat">
-                                    <span class="stat-value">Full</span> Calendar Booking
-                                </div>
-                                <div class="card-stat">
-                                    <span class="stat-value">Auto</span> AI Lead Capture
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 4. Fairfax Shine -->
-                        <div class="work-card wow fadeInUp" data-wow-delay="0.4s">
-                            <div class="card-image-wrapper">
-                                <img src="https://fairfaxshine.com/assets/images/gallery/BMW-840i-19-1024x683.jpg"
-                                    class="card-bg-img" alt="Fairfax Shine">
-                                <div class="card-logo-overlay">
-                                    <div class="card-logo-text">Fairfax Shine</div>
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <div class="card-tags">
-                                    <span class="card-tag highlight">Ads</span>
-                                    <span class="card-tag">Auto Care</span>
-                                </div>
-                                <h4 class="card-title">Fairfax Shine</h4>
-                                <div class="card-stat">
-                                    <span class="stat-value">High</span> ROAS Campaigns
-                                </div>
-                                <div class="card-stat">
-                                    <span class="stat-value">24/7</span> AI Follow-up
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 5. Neisha Thai -->
-                        <div class="work-card wow fadeInUp" data-wow-delay="0.5s">
-                            <div class="card-image-wrapper">
-                                <img src="https://blueprint-media.vercel.app/assets/nilesha-DuW0ohDQ.jpeg"
-                                    class="card-bg-img" alt="Neisha">
-                                <div class="card-logo-overlay">
-                                    <div class="card-logo-text">NEISHA</div>
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <div class="card-tags">
-                                    <span class="card-tag highlight">Social</span>
-                                    <span class="card-tag">Restaurant</span>
-                                </div>
-                                <h4 class="card-title">Neisha Thai</h4>
-                                <div class="card-stat">
-                                    <span class="stat-value">Reels</span> Sprint Campaign
-                                </div>
-                                <div class="card-stat">
-                                    <span class="stat-value">4.9★</span> Avg Rating
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 6. Zayee Shopify -->
-                        <!-- <div class="work-card wow fadeInUp" data-wow-delay="0.6s">
-                            <div class="card-image-wrapper">
-                                <img src="https://envisionecommerce.com/wp-content/uploads/2022/09/shopify-for-ecommerce-store-development.jpg"
-                                    class="card-bg-img" alt="Ecommerce">
-                                <div class="card-logo-overlay">
-                                    <div class="card-logo-text">Zayee</div>
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <div class="card-tags">
-                                    <span class="card-tag highlight">E-Com</span>
-                                    <span class="card-tag">Shopify</span>
-                                </div>
-                                <h4 class="card-title">Zayee Store</h4>
-                                <div class="card-stat">
-                                    <span class="stat-value">Scale</span> Paid Social Ads
-                                </div>
-                                <div class="card-stat">
-                                    <span class="stat-value">Optimized</span> Funnel Structure
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <div class="work-card wow fadeInUp" data-wow-delay="0.6s">
-                            <div class="card-image-wrapper">
-                                <img src="https://blueprint-media.vercel.app/assets/hungry-DX_4qjGd.jpeg"
-                                    class="card-bg-img" alt="Ecommerce">
-                                <div class="card-logo-overlay">
-                                    <div class="card-logo-text">Hangry Joes </div>
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <div class="card-tags">
-                                    <span class="card-tag highlight">Social</span>
-                                    <span class="card-tag">Restaurant</span>
-                                </div>
-                                <h4 class="card-title">Hangry Joes</h4>
-                                <div class="card-stat">
-                                    <span class="stat-value">Scale</span> Paid Social Ads
-                                </div>
-                                <div class="card-stat">
-                                    <span class="stat-value">4.9★</span> Avg Rating
-                                </div>
-                            </div>
-                        </div>
-                        
-
-                        
-
                     </div>
-                    <!-- End Grid -->
+
+                    <!-- Navigation Buttons -->
+                        <div class="carousel-controls wow fadeInUp" data-wow-delay="0.2s">
+                            <button class="dossier-nav-btn prev-btn" onclick="scrollCarousel(-1)">
+                                <i class="icon-arrow-left"><</i>
+                            </button>
+                            <button class="dossier-nav-btn next-btn" onclick="scrollCarousel(1)">
+                                <i class="icon-arrow-right">></i>
+                            </button>
+                        </div>
 
                     <span class="hafl-plus pst-left_bot item_bot wow bounceInScale"></span>
                     <span class="hafl-plus pst-right_bot item_bot wow bounceInScale"></span>
                 </div>
             </div>
             <span class="br-line"></span>
-
-            <!-- == Bottom Section -->
             <div class="sect-bottom">
                 <div class="container">
                     <div class="box-hacker has-overlay_linear mx-1">
@@ -858,11 +790,9 @@
             </div>
             <span class="br-line"></span>
         </section>
-        <!-- END: ISOLATED FEATURE SECTION -->
 
-        <!-- Section Services -->
+        <!-- SERVICES SECTION: Expandable Accordion Style -->
         <section class="section-benefit" id="services">
-            <!-- == Head Section -->
             <div class="sect-header">
                 <div class="container">
                     <div class="s-meta text-caption font-2">
@@ -874,28 +804,20 @@
                 </div>
             </div>
             <span class="br-line"></span>
-            <!-- == Tagline Section -->
             <div class="sect-tagline">
                 <div class="container">
                     <div class="sect-tagline_inner">
                         <span class="hafl-plus pst-left_bot wow bounceInScale"></span>
                         <span class="hafl-plus pst-right_bot wow bounceInScale"></span>
                         <p class="s-name text-caption font-2">
-                            <span class="bar-group type-left">
-                                <span class="bar_center"></span>
-                            </span>
-                            <span class="hacker-text_transform no-delay">
-                                🚀 OUR SERVICES
-                            </span>
-                            <span class="bar-group type-right">
-                                <span class="bar_center"></span>
-                            </span>
+                            <span class="bar-group type-left"><span class="bar_center"></span></span>
+                            <span class="hacker-text_transform no-delay">🚀 OUR SERVICES</span>
+                            <span class="bar-group type-right"><span class="bar_center"></span></span>
                         </p>
                     </div>
                 </div>
             </div>
             <span class="br-line"></span>
-            <!-- == Main Section -->
             <div class="sect-main">
                 <div class="container">
                     <div class="place-video">
@@ -917,9 +839,10 @@
                     </div>
                     <div class="position-relative">
                         <div class="grid-box_icon tf-grid-layout sm-col-2">
-                            <!-- MODIFIED: Added modal triggers -->
-                            <div class="box-icon-text wow fadeInUp" data-bs-toggle="modal"
-                                data-bs-target="#paidAdsModal">
+                            
+                            <!-- 1. PAID ADS SERVICE (Accordion) -->
+                            <div class="box-icon-text wow fadeInUp" onclick="toggleService(this)">
+                                <div class="service-toggle-icon"></div>
                                 <div class="icon">
                                     <img src="asset/images/section/speed.svg" alt="Paid Ads Icon">
                                 </div>
@@ -927,14 +850,19 @@
                                     <p class="title text-main-2">Paid Ads (Meta & Google)</p>
                                     <p class="sub-title text-body-3">
                                         Turn ad spend into predictable profit. Our AI monitors every creative, audience,
-                                        and metric 24/7 — shifting budget in real time to what performs best. No wasted
-                                        dollars, just pure performance.
+                                        and metric 24/7.
                                     </p>
+                                    <!-- Hidden Details -->
+                                    <div class="service-details">
+                                        <p>We don’t just run ads — we build <strong>self-optimizing growth machines</strong>. Our AI system constantly scans every ad creative, audience, and metric 24/7 — reallocating spend in real time to what performs best. No wasted dollars. No guesswork.</p>
+                                        <p>Every campaign is engineered with precision — from ad copy and creative strategy to advanced retargeting and funnel optimization. The result: scalable, data-driven ad systems that <strong>automatically evolve and compound your returns</strong> while you sleep.</p>
+                                    </div>
                                 </div>
                             </div>
-                            <!-- MODIFIED: Added modal triggers -->
-                            <div class="box-icon-text wow fadeInUp" data-bs-toggle="modal"
-                                data-bs-target="#aiReceptionistModal">
+
+                            <!-- 2. AI RECEPTIONIST SERVICE (Accordion) -->
+                            <div class="box-icon-text wow fadeInUp" onclick="toggleService(this)">
+                                <div class="service-toggle-icon"></div>
                                 <div class="icon">
                                     <img src="asset/images/section/ai-core.svg" alt="AI Receptionist Icon">
                                 </div>
@@ -942,9 +870,13 @@
                                     <p class="title text-main-2">AI Receptionist</p>
                                     <p class="sub-title text-body-3">
                                         Your 24/7 front desk that never misses a call. Trained on your offers, tone, and
-                                        process — our AI Receptionist books, qualifies, and converts leads
-                                        automatically, even when you’re off the clock.
+                                        process.
                                     </p>
+                                    <!-- Hidden Details -->
+                                    <div class="service-details">
+                                        <p>Your smartest employee — armed with <strong>specific knowledge and world-class scripting + tone</strong>, never off the clock. Our AI Receptionist instantly answers calls, books appointments, and qualifies leads in real time.</p>
+                                        <p>Built on advanced conversational AI, it adapts to your business’s language, tone, and offers with precision. Every interaction is tracked, analyzed, and optimized automatically, turning your front desk into a <strong>self-improving sales system</strong>.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -954,7 +886,6 @@
                 </div>
             </div>
             <span class="br-line"></span>
-            <!-- == Bottom Section -->
             <div class="sect-bottom">
                 <div class="container">
                     <div class="box-hacker has-overlay_linear mx-1">
@@ -966,7 +897,6 @@
             </div>
             <span class="br-line"></span>
         </section>
-        <!-- /Section Services -->
 
         <!-- Section Workflow -->
         <section class="section-how-to" id="workflow">
@@ -1097,277 +1027,6 @@
             <span class="br-line"></span>
         </section>
         <!-- /Section Workflow -->
-
-        <!-- Section Pricing -->
-        <!-- <section class="section-pricing" id="pricing">
-            <div class="sect-header">
-                <div class="container">
-                    <div class="s-meta text-caption font-2">
-                        <p class="s-number_order wg-counter">[ <span class="text-white">0<span class="odometer"
-                                    data-number="5">0</span></span> / 09 ]</p>
-                        <p class="s-label">[ <span class="text-white hacker-text_transform">PRICING</span> ]</p>
-                    </div>
-                </div>
-            </div>
-            <span class="br-line"></span>
-
-            <div class="sect-tagline">
-                <div class="container">
-                    <div class="sect-tagline_inner">
-                        <h6 class="s-name text-caption font-2">
-                            <span class="bar-group type-left"><span class="bar_center"></span></span>
-                            <span class="hacker-text_transform no-delay">CHOOSE YOUR GROWTH PACKAGE</span>
-                            <span class="bar-group type-right"><span class="bar_center"></span></span>
-                        </h6>
-                    </div>
-                </div>
-            </div>
-
-            <span class="br-line"></span>
-
-            <div class="sect-main">
-                <div class="container">
-                    <div class="sect-title wow fadeInUp">
-                        <h2 class="s-title font-3 m-0">
-                            Transparent Pricing Plans
-                        </h2>
-                    </div>
-
-                    <div class="grid-pricing justify-content-center">
-                       
-                        <div class="wg-plan type-2 wow fadeInUp">
-                            <div class="content">
-                                <div class="plan-header">
-                                    <p class="plan_type text-body-1">Blueprint Media — AI Paid Ads</p>
-                                    <p class="plan-description mb-3">Drive targeted traffic and maximize ROI with
-                                        AI-driven advertising on Meta & Google platforms.</p>
-                                    <p class="plan_setup_fee text-body-3">Setup Fee: <strong>$2,000</strong></p>
-                                    <div class="plan_price">
-                                        <h3 class="price-amount">$1,000</h3>
-                                        <p class="price-duration text-body-3">Monthly</p>
-                                    </div>
-                                    <a href="#" class="tf-btn style-2 style-high animate-btn w-100"><span
-                                            class="text-body-3">Get Started</span></a>
-                                </div>
-                                <span class="br-line has-dot"></span>
-                                <div class="plan-feature">
-                                    <p class="feature_title">What’s Included</p>
-                                    <ul class="features_list">
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            Audience Targeting</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> Ad
-                                            Creation</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            Bidding & Budgeting</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            Performance Tracking</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                      
-                        <div class="wg-plan wow fadeInUp">
-                            <div class="content">
-                                <div class="plan-header">
-                                    <p class="plan_type text-body-1">Blueprint Media — AI Receptionist</p>
-                                    <p class="plan-description mb-3">Your 24/7 digital assistant that never misses a
-                                        lead.</p>
-                                    <p class="plan_setup_fee text-body-3">Setup Fee: <strong>$2,000</strong></p>
-                                    <div class="plan_price">
-                                        <h3 class="price-amount">$1,000</h3>
-                                        <p class="price-duration text-body-3">Monthly</p>
-                                    </div>
-                                    <a href="#" class="tf-btn style-3 style-high animate-btn w-100"><span
-                                            class="text-body-3">Get Started</span></a>
-                                </div>
-                                <span class="br-line has-dot"></span>
-                                <div class="plan-feature">
-                                    <p class="feature_title">What’s Included</p>
-                                    <ul class="features_list">
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> 24/7
-                                            Live Call Answering</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            Automated Scheduling</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> Lead
-                                            Qualification</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span> Call &
-                                            SMS Follow-Ups</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            Customized to Your Business</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            Seamless CRM Integration</li>
-                                        <li><span class="icon"><img src="asset/icon/check.svg" alt="ICON"></span>
-                                            Analytics & Reporting</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>  -->
-        <!-- /Section Pricing -->
-
-        <!-- Section Testimonial -->
-        <section class="section-testimonial">
-            <!-- == Head Section -->
-            <div class="sect-header">
-                <div class="container">
-                    <div class="s-meta text-caption font-2">
-                        <p class="s-number_order wg-counter">
-                            [ <span class="text-white">0<span class="odometer" data-number="6">0</span></span> / 09 ]
-                        </p>
-                        <p class="s-label">[ <span class="text-white hacker-text_transform">RESULTS</span> ]</p>
-                    </div>
-                </div>
-            </div>
-            <span class="br-line"></span>
-            <!-- == Tagline Section -->
-            <div class="sect-tagline">
-                <div class="container">
-                    <div class="sect-tagline_inner">
-                        <span class="hafl-plus pst-left_bot wow bounceInScale"></span>
-                        <span class="hafl-plus pst-right_bot wow bounceInScale"></span>
-                        <h6 class="s-name text-caption font-2">
-                            <span class="bar-group type-left">
-                                <span class="bar_center"></span>
-                            </span>
-                            <span class="hacker-text_transform no-delay">
-                                REAL RESULTS FROM INDUSTRY LEADERS.
-                            </span>
-                            <span class="bar-group type-right">
-                                <span class="bar_center"></span>
-                            </span>
-                        </h6>
-                    </div>
-                </div>
-            </div>
-            <span class="br-line"></span>
-            <!-- == Main Section -->
-            <div class="sect-main">
-                <div class="s-img_item wow bounceInScale">
-                    <div class="globe-cont">
-                        <canvas id="cobe" width="700" height="700"></canvas>
-                    </div>
-                    <img class="lazyload img-2" src="asset/images/section/color-bg.webp"
-                        data-src="asset/images/section/color-bg.webp" alt="Image">
-                </div>
-                <div class="container">
-                    <div class="sect-title wow fadeInUp">
-                        <h2 class="s-title font-3 m-0">
-                            Trusted by businesses <br>
-                            just like yours.
-                        </h2>
-                    </div>
-                    <div class="testimonial-slide-wrap">
-                        <div class="overflow-hidden has-overlay_linear type-2 mx-1">
-
-                            <!-- First Scrolling Row -->
-                            <div class="infiniteSlide infiniteSlide-tes">
-                                <!-- Screenshot Item 1 -->
-                                <div class="testimonial-screenshot-item">
-                                    <div class="phone-mockup">
-                                        <img class="screenshot lazyload" src="asset/images/testimonials/1.JPEG"
-                                            data-src="asset/images/testimonials/1.JPEG" alt="Testimonial Screenshot 1">
-                                    </div>
-                                </div>
-                                <!-- Screenshot Item 2 -->
-                                <div class="testimonial-screenshot-item">
-                                    <div class="phone-mockup">
-                                        <img class="screenshot lazyload" src="asset/images/testimonials/2.PNG"
-                                            data-src="asset/images/testimonials/2.PNG" alt="Testimonial Screenshot 2">
-                                    </div>
-                                </div>
-                                <!-- Screenshot Item 3 -->
-                                <div class="testimonial-screenshot-item">
-                                    <div class="phone-mockup">
-                                        <img class="screenshot lazyload" src="asset/images/testimonials/3.JPEG"
-                                            data-src="asset/images/testimonials/3.JPEG" alt="Testimonial Screenshot 3">
-                                    </div>
-                                </div>
-                                <!-- Screenshot Item 4 -->
-                                <div class="testimonial-screenshot-item">
-                                    <div class="phone-mockup">
-                                        <img class="screenshot lazyload" src="asset/images/testimonials/4.PNG"
-                                            data-src="asset/images/testimonials/4.PNG" alt="Testimonial Screenshot 4">
-                                    </div>
-                                </div>
-                                <!-- Screenshot Item 5 -->
-                                <div class="testimonial-screenshot-item">
-                                    <div class="phone-mockup">
-                                        <img class="screenshot lazyload" src="asset/images/testimonials/5.JPEG"
-                                            data-src="asset/images/testimonials/5.JPEG" alt="Testimonial Screenshot 5">
-                                    </div>
-                                </div>
-                                <!-- Screenshot Item 11 -->
-                                <div class="testimonial-screenshot-item">
-                                    <div class="phone-mockup">
-                                        <img class="screenshot lazyload" src="asset/images/testimonials/11.PNG"
-                                            data-src="asset/images/testimonials/11.PNG" alt="Testimonial Screenshot 11">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Second Scrolling Row (Reversed) -->
-                            <div class="infiniteSlide infiniteSlide-tes" data-style="right">
-                                <!-- Screenshot Item 6 -->
-                                <div class="testimonial-screenshot-item">
-                                    <div class="phone-mockup">
-                                        <img class="screenshot lazyload" src="asset/images/testimonials/6.PNG"
-                                            data-src="asset/images/testimonials/6.PNG" alt="Testimonial Screenshot 6">
-                                    </div>
-                                </div>
-                                <!-- Screenshot Item 7 -->
-                                <div class="testimonial-screenshot-item">
-                                    <div class="phone-mockup">
-                                        <img class="screenshot lazyload" src="asset/images/testimonials/7.PNG"
-                                            data-src="asset/images/testimonials/7.PNG" alt="Testimonial Screenshot 7">
-                                    </div>
-                                </div>
-                                <!-- Screenshot Item 8 -->
-                                <div class="testimonial-screenshot-item">
-                                    <div class="phone-mockup">
-                                        <img class="screenshot lazyload" src="asset/images/testimonials/8.JPEG"
-                                            data-src="asset/images/testimonials/8.JPEG" alt="Testimonial Screenshot 8">
-                                    </div>
-                                </div>
-                                <!-- Screenshot Item 9 -->
-                                <div class="testimonial-screenshot-item">
-                                    <div class="phone-mockup">
-                                        <img class="screenshot lazyload" src="asset/images/testimonials/9.JPEG"
-                                            data-src="asset/images/testimonials/9.JPEG" alt="Testimonial Screenshot 9">
-                                    </div>
-                                </div>
-                                <!-- Screenshot Item 10 -->
-                                <div class="testimonial-screenshot-item">
-                                    <div class="phone-mockup">
-                                        <img class="screenshot lazyload" src="asset/images/testimonials/10.PNG"
-                                            data-src="asset/images/testimonials/10.PNG" alt="Testimonial Screenshot 10">
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <span class="hafl-plus pst-left_bot item_bot z-1 wow bounceInScale"></span>
-                        <span class="hafl-plus pst-right_bot item_bot z-1 wow bounceInScale"></span>
-                    </div>
-                </div>
-            </div>
-            <span class="br-line"></span>
-            <!-- == Bottom Section -->
-            <div class="sect-bottom">
-                <div class="container">
-                    <div class="box-hacker has-overlay_linear mx-1">
-                        <p class="hacker-text text-caption font-2 text-uppercase hackerText">
-                            qW8bL2nRM4ZpYk5gJfXvCt1uHdEo93NTaVxBYmOe7rPQnKDlcUs0AjzhFiGSwLXtRpUo6NMJvqa7bT2EfyCdx9KWZhgL1nFMR3YUJ5toepXAGvqBzNcdwskLm4iT7OPuVHxayJZErm5QbgCnX1UL2D9ptYfOEK0sWhRAgJmzliNu67BXFoQYPCHtvnwMJeaZKRxdo3TfLUGqc48sbE9NYpJAgmWTVrhXxLFo517zkidC3
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <span class="br-line"></span>
-        </section>
-        <!-- /Section Testimonial -->
 
         <!-- Section Faq -->
         <section class="section-faq" id="FAQs">
@@ -1630,54 +1289,6 @@
     </div>
     <!-- /Mobile Menu -->
 
-    <!-- START: MODALS for Services -->
-
-    <!-- Paid Ads Modal -->
-    <div class="modal fade" id="paidAdsModal" tabindex="-1" aria-labelledby="paidAdsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="paidAdsModalLabel">Paid Ads (Meta & Google)</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>We don’t just run ads — we build <strong>self-optimizing growth machines</strong>. Our AI system
-                        constantly scans every ad creative, audience, and metric 24/7 — reallocating spend in real time
-                        to what performs best. No wasted dollars. No guesswork.</p>
-                    <p>Every campaign is engineered with precision — from ad copy and creative strategy to advanced
-                        retargeting and funnel optimization. The result: scalable, data-driven ad systems that
-                        <strong>automatically evolve and compound your returns</strong> while you sleep.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- AI Receptionist Modal -->
-    <div class="modal fade" id="aiReceptionistModal" tabindex="-1" aria-labelledby="aiReceptionistModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="aiReceptionistModalLabel">AI Receptionist</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Your smartest employee — armed with <strong>specific knowledge and world-class scripting +
-                            tone</strong>, never off the clock. Our AI Receptionist instantly answers calls, books
-                        appointments, and qualifies leads in real time — for when you don’t feel like coming to the
-                        phone.</p>
-                    <p>Built on advanced conversational AI, it adapts to your business’s language, tone, and offers with
-                        precision. Every interaction is tracked, analyzed, and optimized automatically, turning your
-                        front desk into a <strong>self-improving sales system</strong>.</p>
-                    <p>It’s not just automation — <strong>it’s intelligence that sells.</strong></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- END: MODALS for Services -->
-
 
 
     <!-- Javascript -->
@@ -1742,41 +1353,87 @@
         var AUTOHIDE = Boolean(0);
     </script>
 
+    <!-- CUSTOM SCRIPTS -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Find our custom tab component container
-            const tabsContainer = document.querySelector('.iso-tabs-container');
-            if (!tabsContainer) {
-                return; // If the component doesn't exist on the page, do nothing
+        // Toggle function for Service Boxes (Accordion Style)
+        function toggleService(element) {
+            const isActive = element.classList.contains('active');
+            
+            // Close all other boxes first
+            document.querySelectorAll('#services .box-icon-text').forEach(box => {
+                box.classList.remove('active');
+            });
+
+            if (!isActive) {
+                element.classList.add('active');
+            }
+        }
+
+        // --- CAROUSEL LOGIC ---
+        const carousel = document.getElementById('workCarousel');
+        let isAutoScrolling = true;
+        let scrollInterval;
+        const autoScrollDelay = 3000; // 3 seconds
+
+        // Function to move the carousel
+        function scrollCarousel(direction) {
+            // Calculate card width including gap (approximate based on CSS)
+            // We get the width of the first child dynamically
+            const card = carousel.firstElementChild;
+            const cardWidth = card.offsetWidth + 30; // +30 for gap
+            
+            const currentScroll = carousel.scrollLeft;
+            const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+
+            // Logic for "Rewind to Front"
+            if (direction === 1) {
+                // If we are near the end, scroll back to 0
+                if (currentScroll + cardWidth >= maxScroll - 10) { // -10 tolerance
+                    carousel.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                }
+            } else {
+                carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
             }
 
-            // Get all the navigation triggers and content panels within this component
-            const tabTriggers = tabsContainer.querySelectorAll('.iso-tab-trigger');
-            const tabPanels = tabsContainer.querySelectorAll('.iso-tab-panel');
+            // Pause auto-scroll on manual click to avoid fighting the user
+            resetAutoScrollTimer();
+        }
 
-            // Add a click event listener to each trigger
-            tabTriggers.forEach(function (trigger) {
-                trigger.addEventListener('click', function (e) {
-                    e.preventDefault(); // Stop the link from navigating
+        // Auto Scroll Function
+        function startAutoScroll() {
+            scrollInterval = setInterval(() => {
+                if(isAutoScrolling) {
+                    scrollCarousel(1);
+                }
+            }, autoScrollDelay);
+        }
 
-                    // Get the ID of the target panel from the 'data-tab-target' attribute
-                    const targetId = this.getAttribute('data-tab-target');
-                    const targetPanel = document.querySelector(targetId);
+        // Reset timer if user interacts
+        function resetAutoScrollTimer() {
+            clearInterval(scrollInterval);
+            startAutoScroll();
+        }
 
-                    // --- This is the core logic ---
-
-                    // 1. Deactivate all triggers and panels first
-                    tabTriggers.forEach(t => t.classList.remove('is-active'));
-                    tabPanels.forEach(p => p.classList.remove('is-active'));
-
-                    // 2. Activate the clicked trigger and its corresponding panel
-                    this.classList.add('is-active');
-                    if (targetPanel) {
-                        targetPanel.classList.add('is-active');
-                    }
-                });
-            });
+        // Pause on hover
+        const carouselContainer = document.getElementById('carouselContainer');
+        carouselContainer.addEventListener('mouseenter', () => {
+            isAutoScrolling = false;
         });
+        
+        carouselContainer.addEventListener('mouseleave', () => {
+            isAutoScrolling = true;
+        });
+        
+        // Also pause on touch (mobile)
+        carouselContainer.addEventListener('touchstart', () => {
+            isAutoScrolling = false;
+        });
+
+        // Start the engine
+        startAutoScroll();
+
     </script>
 
 </body>
