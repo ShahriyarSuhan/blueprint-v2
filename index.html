@@ -749,6 +749,20 @@
                             </div>
 
                             <!-- 6. Hangry Joes -->
+                            
+                            <div class="work-card">
+                                <div class="card-image-wrapper">
+                                    <img src="https://blueprint-media.vercel.app/assets/hungry-DX_4qjGd.jpeg" class="card-bg-img" alt="Hangry Joes">
+                                    <div class="card-logo-overlay"><div class="card-logo-text">Hangry Joes</div></div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-tags"><span class="card-tag highlight">Social</span><span class="card-tag">Restaurant</span></div>
+                                    <h4 class="card-title">Hangry Joes</h4>
+                                    <div class="card-stat"><span class="stat-value">Scale</span> Paid Social Ads</div>
+                                    <div class="card-stat"><span class="stat-value">4.9★</span> Avg Rating</div>
+                                </div>
+                            </div>
+
                             <div class="work-card">
                                 <div class="card-image-wrapper">
                                     <img src="https://blueprint-media.vercel.app/assets/hungry-DX_4qjGd.jpeg" class="card-bg-img" alt="Hangry Joes">
@@ -1373,7 +1387,7 @@
         const carousel = document.getElementById('workCarousel');
         let isAutoScrolling = true;
         let scrollInterval;
-        const autoScrollDelay = 3000; // 3 seconds
+        const autoScrollDelay = 2500; // 2.5 seconds
 
         // Function to move the carousel
         function scrollCarousel(direction) {
@@ -1383,7 +1397,7 @@
             const cardWidth = card.offsetWidth + 30; // +30 for gap
             
             const currentScroll = carousel.scrollLeft;
-            const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+            const maxScroll = (carousel.scrollWidth + 5) - carousel.clientWidth; // +10 for tolerance
 
             // Logic for "Rewind to Front"
             if (direction === 1) {
